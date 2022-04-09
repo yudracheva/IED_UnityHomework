@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1c10523dffaf047b88fc3d5a295a97, type: 3}
+  m_Name: LevelStaticData
+  m_EditorClassIdentifier: 
+  LevelKey: Game
+  EnemySpawners:
+  - Id: Game_5e950c6b-aa3d-4188-896f-fdc73ecef651
+    Position: {x: 12.37, y: -4.5, z: 43.53}
+  - Id: Game_38b1bbc1-a5d6-4843-bddf-cec868c4e683
+    Position: {x: -17.12, y: -4.5, z: 43.53}
+  - Id: Game_18accdd9-0c6c-4511-b366-b6502f42bae4
+    Position: {x: 12.37, y: -4.5, z: 72.25}
+  - Id: Game_c0ef6009-d639-4fee-8a80-6b31675bd70a
+    Position: {x: -17.12, y: -4.5, z: 72.05}
+  BonusSpawners:
+  - Id: Game_c06a3a5d-d47e-44ca-95ae-9e344a541ffa
+    Position: {x: 12.37, y: -4.5, z: 62.75}
+  - Id: Game_6438d898-c12a-45dc-b0bd-ceb94879631c
+    Position: {x: -17.39, y: -4.5, z: 62.75}
+  - Id: Game_956a0e35-c178-4adc-a489-404dd4368070
+    Position: {x: -2.05, y: -4.5, z: 49.1}
+  LevelWaves: {fileID: 11400000, guid: 7fc8ef2828526ee4d8623005c32e01be, type: 2}
+  SpawnPointPrefab: {fileID: 7616564685531322821, guid: e884ede9b36cb164eb8089ad53210d31,
+    type: 3}
