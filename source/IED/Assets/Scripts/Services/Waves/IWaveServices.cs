@@ -2,9 +2,9 @@
 
 namespace Services.Waves
 {
-  public interface IWaveServices : ICleanupService
-  {
-    void Start();
-    void SetLevelWaves(LevelWaveStaticData wavesData);
-  }
+    public interface IWaveServices : ICleanupService
+    {
+        void Start();
+        void SetLevelWaves(LevelWaveStaticData wavesData);
+    }
 }

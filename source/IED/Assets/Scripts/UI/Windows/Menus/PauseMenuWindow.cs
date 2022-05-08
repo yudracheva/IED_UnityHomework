@@ -6,30 +6,47 @@ using UnityEngine.UI;
 
 namespace UI.Windows.Menus
 {
-  public class PauseMenuWindow : BaseWindow
-  {
-    [SerializeField] private Button menuButton;
-    
-    private IGameStateMachine gameStateMachine;
-
-    public void Construct(IGameStateMachine gameStateMachine)
+    public class PauseMenuWindow : BaseWindow
     {
-      this.gameStateMachine = gameStateMachine;
-    }
+        [SerializeField] private Button menuButton;
+        [SerializeField] private Button closeButton;
 
-    protected override void Subscribe()
-    {
-      base.Subscribe();
-      menuButton.onClick.AddListener(LoadMainMenu);
-    }
+        private IGameStateMachine gameStateMachine;
 
-    protected override void Cleanup()
-    {
-      base.Cleanup();
-      menuButton.onClick.RemoveListener(LoadMainMenu);
-    }
+        public void Construct(IGameStateMachine gameStateMachine)
+        {
+            this.gameStateMachine = gameStateMachine;
+        }
 
-    private void LoadMainMenu() => 
-      gameStateMachine.Enter<MainMenuState>();
-  }
+        protected override void Subscribe()
+        {
+            base.Subscribe();
+            menuButton.onClick.AddListener(LoadMainMenu);
+            closeButton.onClick.AddListener(Close);
+        }
+
+        public override void Open()
+        {
+            Time.timeScale = 0;
+            base.Open();
+        }
+        
+        public override void Close()
+        {
+            Time.timeScale = 1;
+            base.Close();
+        }
+        
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            menuButton.onClick.RemoveListener(LoadMainMenu);
+            closeButton.onClick.RemoveListener(Close);
+        }
+        
+        private void LoadMainMenu()
+        {
+            gameStateMachine.Enter<MainMenuState>();
+        }
+    }
 }

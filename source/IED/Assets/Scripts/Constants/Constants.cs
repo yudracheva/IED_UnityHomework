@@ -1,14 +1,14 @@
 ﻿namespace ConstantsValue
 {
-  public static class Constants
-  {
-    public static string GameScene = "Game";
-    public static string MainMenuScene = "MainMenu";
-
-    public static string MongoClientSettings ="mongodb+srv://admin:root@simpledungeon.djujm.mongodb.net/SimpleDungeonBase?retryWrites=true&w=majority";
-    public static string MongoDatabaseName = "SimpleDungeonBase";
-    public static string MongoCollectionName = "Leaderboard";
-    public static int TopLength = 3;
-    public static int LeaderboardUpdateRange = 60;
-  }
+    public static class Constants
+    {
+        public const string GameScene = "Game";
+        public const string MainMenuScene = "MainMenu";
+        public const string MongoClientSettings = "mongodb+srv://yudracheva:oEye1lRe14bMDk5N@cluster0.exlfc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        public const string MongoDatabaseName = "SimpleDungeonBase";
+        public const string MongoCollectionName = "Leaderboard";
+        
+        public const int TopLength = 3;
+        public const int LeaderboardUpdateRange = 60;
+    }
 }

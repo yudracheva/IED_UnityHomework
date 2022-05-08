@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace Services.Factories.Enemy
 {
-  public struct SlainedEnemy
-  {
-    public EnemyTypeId Id;
-    public GameObject Enemy;
-
-    public SlainedEnemy(EnemyTypeId id, GameObject enemy)
+    public struct SlainedEnemy
     {
-      Id = id;
-      Enemy = enemy;
+        public EnemyTypeId Id;
+        public GameObject Enemy;
+
+        public SlainedEnemy(EnemyTypeId id, GameObject enemy)
+        {
+            Id = id;
+            Enemy = enemy;
+        }
     }
-  }
 }

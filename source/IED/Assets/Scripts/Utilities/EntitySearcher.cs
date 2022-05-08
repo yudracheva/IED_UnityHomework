@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using StaticData.Utilities;
 using UnityEngine;
@@ -9,9 +8,9 @@ namespace Utilities
     {
         [SerializeField] private Transform checkPoint;
         [SerializeField] private EntitySearcherStaticData searchData;
+        private Collider[] hits;
 
         private int searchedCount;
-        private Collider[] hits;
 
         public IEnumerable<Collider> Hits => hits;
         public Collider FirstHit => hits[0];

@@ -16,4 +16,4 @@ MonoBehaviour:
   Hp: 100
   MoveData: {fileID: 11400000, guid: 9b935553aa05b734baa9344f44220a9c, type: 2}
   AttackData: {fileID: 11400000, guid: 7914f64ccf68c0c40aaa138ffe042740, type: 2}
-  Prefab: {fileID: 192428, guid: c26833473ce06df4ba5631fd7a4b98bc, type: 3}
+  Prefab: {fileID: 142548, guid: 100d11a972102fd49823a64ea77dcdb8, type: 3}

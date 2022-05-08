@@ -2,8 +2,8 @@
 
 namespace Systems.Healths
 {
-  public interface IChangedValue
-  {
-    event Action<float, float> Changed;
-  }
+    public interface IChangedValue
+    {
+        event Action<float, float> Changed;
+    }
 }

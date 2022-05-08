@@ -1,37 +1,46 @@
 ﻿using System;
-using Loots;
 using StaticData.Loot.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Windows.Inventories
 {
-  public abstract class UIBaseBagSlot : MonoBehaviour
-  {
-    [SerializeField] protected Image itemView;
-    [SerializeField] private Button clickButton;
+    public abstract class UIBaseBagSlot : MonoBehaviour
+    {
+        [SerializeField] protected Image itemView;
+        [SerializeField] private Button clickButton;
 
-    public ItemStaticData EquippedItem { get; protected set; }
-    
-    public event Action<ItemStaticData> Clicked;
+        public ItemStaticData EquippedItem { get; protected set; }
 
-    private void Awake() => 
-      clickButton.onClick.AddListener(NotifyAboutClick);
+        private void Awake()
+        {
+            clickButton.onClick.AddListener(NotifyAboutClick);
+        }
 
-    private void OnDestroy() => 
-      clickButton.onClick.RemoveListener(NotifyAboutClick);
+        private void OnDestroy()
+        {
+            clickButton.onClick.RemoveListener(NotifyAboutClick);
+        }
 
-    protected abstract void SetItemView(ItemStaticData item);
+        public event Action<ItemStaticData> Clicked;
 
-    protected abstract void SetDefaultView();
+        protected abstract void SetItemView(ItemStaticData item);
 
-    protected void SaveItemSlot(ItemStaticData item) => 
-      EquippedItem = item;
+        protected abstract void SetDefaultView();
 
-    protected void ChangeImageEnableState(Image image, bool isEnable) => 
-      image.enabled = isEnable;
+        protected void SaveItemSlot(ItemStaticData item)
+        {
+            EquippedItem = item;
+        }
 
-    private void NotifyAboutClick() => 
-      Clicked?.Invoke(EquippedItem);
-  }
+        protected void ChangeImageEnableState(Image image, bool isEnable)
+        {
+            image.enabled = isEnable;
+        }
+
+        private void NotifyAboutClick()
+        {
+            Clicked?.Invoke(EquippedItem);
+        }
+    }
 }

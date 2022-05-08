@@ -2,9 +2,9 @@
 
 namespace Services.Score
 {
-  public interface IScoreService : ICleanupService
-  {
-    Task<bool> IsPLayerInTop();
-    void SavePlayerInLeaderboard(string nickname);
-  }
+    public interface IScoreService : ICleanupService
+    {
+        Task<bool> IsPLayerInTop();
+        void SavePlayerInLeaderboard(string nickname);
+    }
 }

@@ -4,32 +4,39 @@ using UnityEngine;
 
 namespace Hero
 {
-  public class HeroDeath : MonoBehaviour
-  {
-    [SerializeField] private HeroStateMachine hero;
-    [SerializeField] private Collider heroCollider;
-    [SerializeField] private HeroInput input;
-    
-    private IHeroDeathService deathService;
-    private IHealth health;
-
-    public void Construct(IHeroDeathService deathService, IHealth health)
+    public class HeroDeath : MonoBehaviour
     {
-      this.deathService = deathService;
-      this.health = health;
-      this.health.Dead += Dead;
-    }
+        [SerializeField] private HeroStateMachine hero;
+        [SerializeField] private Collider heroCollider;
+        [SerializeField] private HeroInput input;
 
-    private void Dead()
-    {
-      input.Disable();
-      hero.Dead();
-      heroCollider.enabled = false;
-      deathService.Dead();
-      Cleanup();
-    }
+        private IHeroDeathService _deathService;
+        private IHealth _health;
+        private HeroSongs _heroSongs;
+        private AudioSource _audioSource;
 
-    private void Cleanup() => 
-      health.Dead -= Dead;
-  }
+        public void Construct(IHeroDeathService deathService, IHealth health)
+        {
+            _deathService = deathService;
+            _health = health;
+            _health.Dead += Dead;
+            _heroSongs = GetComponentInChildren<HeroSongs>();
+            _audioSource = GetComponentInChildren<AudioSource>();
+        }
+
+        private void Dead()
+        {
+            _audioSource.clip = _heroSongs.DeathSong;
+            _audioSource.Play();
+
+            input.Disable();
+            hero.Dead();
+            heroCollider.enabled = false;
+            _deathService.Dead();
+            Cleanup();
+        }
+
+        private void Cleanup() =>
+            _health.Dead -= Dead;
+    }
 }

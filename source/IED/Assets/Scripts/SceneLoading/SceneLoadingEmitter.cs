@@ -10,16 +10,24 @@ namespace SceneLoading
         public static event Action<string> OnAsyncSceneLoaded;
         public static event Action<string> OnSyncSceneLoaded;
 
-        public void LoadScene() =>
+        public void LoadScene()
+        {
             OnSyncSceneLoaded?.Invoke(nextScene);
+        }
 
-        public void LoadAsyncScene() =>
+        public void LoadAsyncScene()
+        {
             OnAsyncSceneLoaded?.Invoke(nextScene);
+        }
 
-        public void LoadAsyncScene(string scene) =>
+        public void LoadAsyncScene(string scene)
+        {
             OnAsyncSceneLoaded?.Invoke(scene);
+        }
 
-        public void LoadScene(string scene) =>
+        public void LoadScene(string scene)
+        {
             OnSyncSceneLoaded?.Invoke(scene);
+        }
     }
 }

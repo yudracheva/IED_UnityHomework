@@ -1,8 +1,8 @@
 ﻿namespace Bonuses
 {
-  public enum BonusTypeId
-  {
-    Health, 
-    Gold
-  }
+    public enum BonusTypeId
+    {
+        Health,
+        Gold
+    }
 }

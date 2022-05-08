@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ConstantsValue;
-using Interfaces;
 using Loots;
 using Services.Assets;
 using StaticData.Loot.Items;
@@ -9,82 +7,82 @@ using UnityEngine;
 
 namespace Services.Factories.Loot
 {
-  public class LootSpawner : ILootSpawner
-  {
-    private readonly IAssetProvider assetProvider;
-
-    private readonly Queue<Money> monies;
-    private readonly Queue<DroppedLoot> droppedLoots;
-
-    public LootSpawner(IAssetProvider assetProvider)
+    public class LootSpawner : ILootSpawner
     {
-      this.assetProvider = assetProvider;
-      monies = new Queue<Money>(30);
-      droppedLoots = new Queue<DroppedLoot>(30);
-    }
+        private readonly IAssetProvider assetProvider;
+        private readonly Queue<DroppedLoot> droppedLoots;
 
-    public void Cleanup()
-    {
-      Money money;
-      while (monies.Count > 0)
-      {
-        money = monies.Dequeue();
-        money.PickedUp -= OnMoneyPickedUp;
-      }
+        private readonly Queue<Money> monies;
 
-      DroppedLoot loot;
-      while (droppedLoots.Count > 0)
-      {
-        loot = droppedLoots.Dequeue();
-        loot.PickedUp -= OnLootPickedUp;
-      }
-    }
+        public LootSpawner(IAssetProvider assetProvider)
+        {
+            this.assetProvider = assetProvider;
+            monies = new Queue<Money>(30);
+            droppedLoots = new Queue<DroppedLoot>(30);
+        }
 
-    public void SpawnMoney(int moneyCount, Vector3 position)
-    {
-      Money money;
-      for (var i = 0; i < moneyCount; i++)
-      {
-        money = monies.Count > 0 ? monies.Dequeue() : CreateMoney();
-        money.SetPosition(position);
-        money.Show();
-      }
-    }
+        public void Cleanup()
+        {
+            Money money;
+            while (monies.Count > 0)
+            {
+                money = monies.Dequeue();
+                money.PickedUp -= OnMoneyPickedUp;
+            }
 
-    public void SpawnLoot(ItemStaticData droppedLoot, Vector3 position)
-    {
-      var loot = droppedLoots.Count > 0 ? droppedLoots.Dequeue() : CreateLoot();
-      loot.SetPosition(position);
-      loot.SetItem(droppedLoot);
-      loot.Show();
-    }
+            DroppedLoot loot;
+            while (droppedLoots.Count > 0)
+            {
+                loot = droppedLoots.Dequeue();
+                loot.PickedUp -= OnLootPickedUp;
+            }
+        }
 
-    private Money CreateMoney()
-    {
-      var money = assetProvider.Instantiate<Money>(AssetsPath.MoneyPrefabPath);
-      money.Hide();
-      money.PickedUp += OnMoneyPickedUp;
-      return money;
-    }
+        public void SpawnMoney(int moneyCount, Vector3 position)
+        {
+            Money money;
+            for (var i = 0; i < moneyCount; i++)
+            {
+                money = monies.Count > 0 ? monies.Dequeue() : CreateMoney();
+                money.SetPosition(position);
+                money.Show();
+            }
+        }
 
-    private DroppedLoot CreateLoot()
-    {
-      var loot = assetProvider.Instantiate<DroppedLoot>(AssetsPath.DroppedLootPrefabPath);
-      loot.Hide();
-      loot.PickedUp += OnLootPickedUp;
-      return loot;
-    }
+        public void SpawnLoot(ItemStaticData droppedLoot, Vector3 position)
+        {
+            var loot = droppedLoots.Count > 0 ? droppedLoots.Dequeue() : CreateLoot();
+            loot.SetPosition(position);
+            loot.SetItem(droppedLoot);
+            loot.Show();
+        }
 
-    private void OnMoneyPickedUp(Money money)
-    {
-      money.Hide();
-      monies.Enqueue(money);
-    }
+        private Money CreateMoney()
+        {
+            var money = assetProvider.Instantiate<Money>(AssetsPath.MoneyPrefabPath);
+            money.Hide();
+            money.PickedUp += OnMoneyPickedUp;
+            return money;
+        }
 
-    private void OnLootPickedUp(DroppedLoot loot)
-    {
-      loot.Hide();
-      droppedLoots.Enqueue(loot);
+        private DroppedLoot CreateLoot()
+        {
+            var loot = assetProvider.Instantiate<DroppedLoot>(AssetsPath.DroppedLootPrefabPath);
+            loot.Hide();
+            loot.PickedUp += OnLootPickedUp;
+            return loot;
+        }
+
+        private void OnMoneyPickedUp(Money money)
+        {
+            money.Hide();
+            monies.Enqueue(money);
+        }
+
+        private void OnLootPickedUp(DroppedLoot loot)
+        {
+            loot.Hide();
+            droppedLoots.Enqueue(loot);
+        }
     }
-  }
 }

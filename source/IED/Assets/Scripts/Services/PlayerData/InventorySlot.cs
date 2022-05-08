@@ -2,36 +2,36 @@
 
 namespace Services.PlayerData
 {
-  public class InventorySlot
-  {
-    public ItemStaticData Item;
-    public int Count;
-    public int Index;
-
-    public InventorySlot(int index)
+    public class InventorySlot
     {
-      Index = index;
-    }
+        public int Count;
+        public int Index;
+        public ItemStaticData Item;
 
-    public void ClearSlot()
-    {
-      Item = null;
-      Count = 0;
-    }
+        public InventorySlot(int index)
+        {
+            Index = index;
+        }
 
-    public void RemoveItem(int count)
-    {
-      Count -= count;
-      if (Count == 0)
-        ClearSlot();
-    }
+        public void ClearSlot()
+        {
+            Item = null;
+            Count = 0;
+        }
 
-    public void PutItem(ItemStaticData item)
-    {
-      if (Item == null)
-        Item = item;
+        public void RemoveItem(int count)
+        {
+            Count -= count;
+            if (Count == 0)
+                ClearSlot();
+        }
 
-      Count++;
+        public void PutItem(ItemStaticData item)
+        {
+            if (Item == null)
+                Item = item;
+
+            Count++;
+        }
     }
-  }
 }

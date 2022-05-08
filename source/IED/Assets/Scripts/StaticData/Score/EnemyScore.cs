@@ -3,10 +3,10 @@ using Enemies.Spawn;
 
 namespace StaticData.Score
 {
-  [Serializable]
-  public struct EnemyScore
-  {
-    public EnemyTypeId Type;
-    public int Cost;
-  }
+    [Serializable]
+    public struct EnemyScore
+    {
+        public EnemyTypeId Type;
+        public int Cost;
+    }
 }

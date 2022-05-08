@@ -4,33 +4,32 @@ using Services.Progress;
 
 namespace GameStates.States
 {
-  public class LoadProgressState : IState
-  {
-    private readonly IGameStateMachine gameStateMachine;
-    private readonly ISceneLoader sceneLoader;
-    private readonly IPersistentProgressService progressService;
-
-    public LoadProgressState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IPersistentProgressService progressService)
+    public class LoadProgressState : IState
     {
-      this.gameStateMachine = gameStateMachine;
-      this.sceneLoader = sceneLoader;
-      this.progressService = progressService;
-    }
+        private readonly IGameStateMachine gameStateMachine;
+        private readonly ISceneLoader sceneLoader;
+        private readonly IPersistentProgressService progressService;
 
-    public void Enter()
-    {
-      LoadData();
-      gameStateMachine.Enter<MainMenuState>();
-    }
+        public LoadProgressState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader,
+            IPersistentProgressService progressService)
+        {
+            this.gameStateMachine = gameStateMachine;
+            this.sceneLoader = sceneLoader;
+            this.progressService = progressService;
+        }
 
-    public void Exit()
-    {
-      
-    }
+        public void Enter()
+        {
+            LoadData();
+            gameStateMachine.Enter<MainMenuState>();
+        }
 
-    private void LoadData()
-    {
-      
+        public void Exit()
+        {
+        }
+
+        private void LoadData()
+        {
+        }
     }
-  }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Hero
 {
-  public class HeroEquipment : MonoBehaviour
-  {
-    
-  }
+    public class HeroEquipment : MonoBehaviour
+    {
+    }
 }

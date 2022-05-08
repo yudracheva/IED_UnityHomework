@@ -2,31 +2,37 @@
 
 namespace Services.PlayerData
 {
-  public class PlayerMoney
-  {
-    public int Count { get; private set; }
-
-    public event Action Changed;
-
-    public void AddMoney(int addedMoney)
+    public class PlayerMoney
     {
-      Count += addedMoney;
-      NotifyAboutChange();
+        public int Count { get; private set; }
+
+        public event Action Changed;
+
+        public void AddMoney(int addedMoney)
+        {
+            Count += addedMoney;
+            NotifyAboutChange();
+        }
+
+        public void ReduceMoney(int decedMoney)
+        {
+            Count -= decedMoney;
+            NotifyAboutChange();
+        }
+
+        public void RemoveMoney()
+        {
+            Count = 0;
+        }
+
+        public bool IsEnoughMoney(int neededCount)
+        {
+            return Count >= neededCount;
+        }
+
+        private void NotifyAboutChange()
+        {
+            Changed?.Invoke();
+        }
     }
-
-    public void ReduceMoney(int decedMoney)
-    {
-      Count -= decedMoney;
-      NotifyAboutChange();
-    }
-
-    public void RemoveMoney() => 
-      Count = 0;
-    
-    public bool IsEnoughMoney(int neededCount) => 
-      Count >= neededCount;
-
-    private void NotifyAboutChange() => 
-      Changed?.Invoke();
-  }
 }

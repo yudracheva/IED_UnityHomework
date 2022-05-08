@@ -2,7 +2,6 @@
 using System.Linq;
 using Bonuses;
 using ConstantsValue;
-using Enemies;
 using Enemies.Spawn;
 using Services.UI.Factory;
 using StaticData.Bonuses;
@@ -19,15 +18,15 @@ namespace Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
-        private Dictionary<WindowId, WindowInstantiateData> _windows;
+        private Dictionary<BonusTypeId, BonusStaticData> _bonuses;
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
+        private HeroBaseStaticData _heroCharacteristics;
+        private HeroSpawnStaticData _heroSpawnData;
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<string, EnemyLoot[]> _loots;
-        private Dictionary<BonusTypeId, BonusStaticData> _bonuses;
-        private HeroSpawnStaticData _heroSpawnData;
-        private HeroBaseStaticData _heroCharacteristics;
-        private ShopStaticData _shopData;
         private ScoreStaticData _scoreData;
+        private ShopStaticData _shopData;
+        private Dictionary<WindowId, WindowInstantiateData> _windows;
 
         public void Load()
         {
@@ -58,48 +57,62 @@ namespace Services.StaticData
                 .ToDictionary(x => x.Type, x => x);
         }
 
-        public WindowInstantiateData ForWindow(WindowId windowId) =>
-            _windows.TryGetValue(windowId, out var staticData)
+        public WindowInstantiateData ForWindow(WindowId windowId)
+        {
+            return _windows.TryGetValue(windowId, out var staticData)
                 ? staticData
                 : new WindowInstantiateData();
+        }
 
-        public HeroSpawnStaticData ForHero() =>
-            _heroSpawnData;
+        public HeroSpawnStaticData ForHero()
+        {
+            return _heroSpawnData;
+        }
 
-        public HeroBaseStaticData ForHeroCharacteristics() =>
-            _heroCharacteristics;
+        public HeroBaseStaticData ForHeroCharacteristics()
+        {
+            return _heroCharacteristics;
+        }
 
-        public EnemyStaticData ForMonster(EnemyTypeId typeId) =>
-            _enemies.TryGetValue(typeId, out var staticData)
+        public EnemyStaticData ForMonster(EnemyTypeId typeId)
+        {
+            return _enemies.TryGetValue(typeId, out var staticData)
                 ? staticData
                 : null;
+        }
 
-        public LevelStaticData ForLevel(string sceneKey) =>
-            _levels.TryGetValue(sceneKey, out var staticData)
+        public LevelStaticData ForLevel(string sceneKey)
+        {
+            return _levels.TryGetValue(sceneKey, out var staticData)
                 ? staticData
                 : null;
+        }
 
         public EnemyLoot ForLoot(string levelKey, EnemyTypeId typeId)
         {
-            if (!_loots.TryGetValue(levelKey, out var enemyLoots)) 
+            if (!_loots.TryGetValue(levelKey, out var enemyLoots))
                 return new EnemyLoot();
-            
+
             for (var i = 0; i < enemyLoots.Length; i++)
-            {
                 if (enemyLoots[i].TypeIds.Contains(typeId))
                     return enemyLoots[i];
-            }
 
             return new EnemyLoot();
         }
 
-        public ShopStaticData ForShop() =>
-            _shopData;
+        public ShopStaticData ForShop()
+        {
+            return _shopData;
+        }
 
-        public BonusStaticData ForBonus(BonusTypeId typeId) =>
-            _bonuses.TryGetValue(typeId, out var staticData) ? staticData : null;
+        public BonusStaticData ForBonus(BonusTypeId typeId)
+        {
+            return _bonuses.TryGetValue(typeId, out var staticData) ? staticData : null;
+        }
 
-        public ScoreStaticData ForScore() =>
-            _scoreData;
+        public ScoreStaticData ForScore()
+        {
+            return _scoreData;
+        }
     }
 }

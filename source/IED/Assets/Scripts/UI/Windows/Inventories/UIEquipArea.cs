@@ -7,55 +7,54 @@ using UnityEngine;
 
 namespace UI.Windows.Inventories
 {
-  public class UIEquipArea : MonoBehaviour
-  {
-    [SerializeField] private UIEquipSlot[] slots;
-    [SerializeField] private EquipmentAreaStaticData areaData;
-
-    public ItemStaticData LastClickedItem { get; private set; }
-    
-    public event Action<ItemStaticData> EquipClicked;
-
-    public void InitSlots(IEnumerable<EquipmentSlot> equipmentSlots)
+    public class UIEquipArea : MonoBehaviour
     {
-      var index = 0;
-      foreach (var equipmentSlot in equipmentSlots)
-      {
-        slots[index].SetEquipSlot(areaData.GetSlotView(equipmentSlot.LootType), equipmentSlot.LootType);
-        slots[index].SetItem(equipmentSlot.Item);
-        slots[index].Clicked += NotifyAboutEquipClick;
-        index++;
-      }
-    }
+        [SerializeField] private UIEquipSlot[] slots;
+        [SerializeField] private EquipmentAreaStaticData areaData;
 
-    public void Cleanup()
-    {
-      for (var i = 0; i < slots.Length; i++)
-      {
-        slots[i].Clicked -= NotifyAboutEquipClick;
-      }
-    }
+        public ItemStaticData LastClickedItem { get; private set; }
 
-    public void RemoveLastClickedItem() => 
-      LastClickedItem = null;
+        public event Action<ItemStaticData> EquipClicked;
 
-    public void UpdateView(IEnumerable<EquipmentSlot> equipmentSlots)
-    {
-      var index = 0;
-      foreach (var equipmentSlot in equipmentSlots)
-      {
-        slots[index].SetItem(equipmentSlot.Item);
-        index++;
-      }
-    }
+        public void InitSlots(IEnumerable<EquipmentSlot> equipmentSlots)
+        {
+            var index = 0;
+            foreach (var equipmentSlot in equipmentSlots)
+            {
+                slots[index].SetEquipSlot(areaData.GetSlotView(equipmentSlot.LootType), equipmentSlot.LootType);
+                slots[index].SetItem(equipmentSlot.Item);
+                slots[index].Clicked += NotifyAboutEquipClick;
+                index++;
+            }
+        }
 
-    private void NotifyAboutEquipClick(ItemStaticData item)
-    {
-      if (item != null)
-      {
-        LastClickedItem = item;
-        EquipClicked?.Invoke(item);
-      }
+        public void Cleanup()
+        {
+            for (var i = 0; i < slots.Length; i++) slots[i].Clicked -= NotifyAboutEquipClick;
+        }
+
+        public void RemoveLastClickedItem()
+        {
+            LastClickedItem = null;
+        }
+
+        public void UpdateView(IEnumerable<EquipmentSlot> equipmentSlots)
+        {
+            var index = 0;
+            foreach (var equipmentSlot in equipmentSlots)
+            {
+                slots[index].SetItem(equipmentSlot.Item);
+                index++;
+            }
+        }
+
+        private void NotifyAboutEquipClick(ItemStaticData item)
+        {
+            if (item != null)
+            {
+                LastClickedItem = item;
+                EquipClicked?.Invoke(item);
+            }
+        }
     }
-  }
 }

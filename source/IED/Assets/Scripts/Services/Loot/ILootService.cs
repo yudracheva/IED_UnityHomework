@@ -1,9 +1,7 @@
-﻿using Enemies.Entity;
-
-namespace Services.Loot
+﻿namespace Services.Loot
 {
-  public interface ILootService : ICleanupService
-  {
-    void SetSceneName(string name);
-  }
+    public interface ILootService : ICleanupService
+    {
+        void SetSceneName(string name);
+    }
 }

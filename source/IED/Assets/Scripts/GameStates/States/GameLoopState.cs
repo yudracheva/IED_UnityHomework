@@ -3,22 +3,22 @@ using Services.Waves;
 
 namespace GameStates.States
 {
-  internal class GameLoopState : IState
-  {
-    private readonly IWaveServices waveServices;
-
-    public GameLoopState(IGameStateMachine stateMachine, IWaveServices waveServices)
+    internal class GameLoopState : IState
     {
-      this.waveServices = waveServices;
-    }
+        private readonly IWaveServices waveServices;
 
-    public void Enter()
-    {
-      waveServices.Start();
-    }
+        public GameLoopState(IGameStateMachine stateMachine, IWaveServices waveServices)
+        {
+            this.waveServices = waveServices;
+        }
 
-    public void Exit()
-    {
+        public void Enter()
+        {
+            waveServices.Start();
+        }
+
+        public void Exit()
+        {
+        }
     }
-  }
 }

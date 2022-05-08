@@ -1,3 +1,4 @@
+using System;
 using Systems.Healths;
 using Interfaces;
 using UnityEngine;
@@ -9,7 +10,15 @@ namespace Hero
         [SerializeField] private HeroStateMachine hero;
         [SerializeField] private Health health;
         [SerializeField] private float maxAngle = 45f;
-        
+        private HeroSongs _heroSongs;
+        private AudioSource _audioSource;
+
+        protected void Awake()
+        {
+            _heroSongs = transform.parent.GetComponentInChildren<HeroSongs>();
+            _audioSource = transform.parent.GetComponentInChildren<AudioSource>();
+        }
+
         public void TakeDamage(float damage, Vector3 attackPosition)
         {
             if (IsDamageAbsorbed(attackPosition))
@@ -20,19 +29,23 @@ namespace Hero
 
         private void TakeDamage(float damage)
         {
+            _audioSource.clip = _heroSongs.ImpactSong;
+            _audioSource.Play();
+            
             hero.Impact();
             health.TakeDamage(damage);
         }
 
-        private void AbsorbDamage() => 
+        private void AbsorbDamage() =>
             hero.ImpactInShield();
 
-        private bool IsDamageAbsorbed(Vector3 attackPosition) => 
+        private bool IsDamageAbsorbed(Vector3 attackPosition) =>
             (hero.IsBlockingUp && IsAttackForward(attackPosition)) || hero.IsRolling;
 
         private bool IsAttackForward(Vector3 attackPosition)
         {
-            var attackVector = new Vector2( attackPosition.x - hero.transform.position.x, attackPosition.z - hero.transform.position.z );
+            var attackVector = new Vector2(attackPosition.x - hero.transform.position.x,
+                attackPosition.z - hero.transform.position.z);
             var forward = new Vector2(hero.transform.forward.x, hero.transform.forward.z);
             return Vector2.Angle(forward, attackVector) <= maxAngle;
         }

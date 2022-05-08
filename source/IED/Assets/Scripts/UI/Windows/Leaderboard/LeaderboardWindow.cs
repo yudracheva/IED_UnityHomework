@@ -6,56 +6,56 @@ using UnityEngine.UI;
 
 namespace UI.Windows.Leaderboard
 {
-  public class LeaderboardWindow : BaseWindow
-  {
-    [SerializeField] private Button backButton;
-    [SerializeField] private RectTransform content;
-    [SerializeField] private PlayerLeaderboardField fieldPrefab;
-    
-    private IDatabaseService databaseService;
-
-    public void Construct(IDatabaseService databaseService)
+    public class LeaderboardWindow : BaseWindow
     {
-      this.databaseService = databaseService;
-      SetLeaderboard();
-    }
+        [SerializeField] private Button backButton;
+        [SerializeField] private RectTransform content;
+        [SerializeField] private PlayerLeaderboardField fieldPrefab;
 
-    protected override void Subscribe()
-    {
-      base.Subscribe();
-      backButton.onClick.AddListener(Close);
-    }
+        private IDatabaseService databaseService;
 
-    protected override void Cleanup()
-    {
-      base.Cleanup();
-      backButton.onClick.RemoveListener(Close);
-    }
+        public void Construct(IDatabaseService databaseService)
+        {
+            this.databaseService = databaseService;
+            SetLeaderboard();
+        }
 
-    public override void Close() => 
-      Destroy(gameObject);
+        protected override void Subscribe()
+        {
+            base.Subscribe();
+            backButton.onClick.AddListener(Close);
+        }
 
-    private async void SetLeaderboard()
-    {
-      IEnumerable<LeaderboardPlayer> players;
-      if (databaseService.IsNeedToUpdateLeaderboard())
-        players = await databaseService.UpdateTopPlayers();
-      else
-        players = databaseService.Leaderboard;
-      
-      CreateFields(players);
-    }
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            backButton.onClick.RemoveListener(Close);
+        }
 
-    private void CreateFields(IEnumerable<LeaderboardPlayer> leaderboardPlayers)
-    {
-      PlayerLeaderboardField field;
-      foreach (var player in leaderboardPlayers)
-      {
-        field = Instantiate(fieldPrefab, content);
-        field.SetPlayer(player.Nickname, player.Score);
-      }
+        public override void Close()
+        {
+            Destroy(gameObject);
+        }
+
+        private async void SetLeaderboard()
+        {
+            IEnumerable<LeaderboardPlayer> players;
+            if (databaseService.IsNeedToUpdateLeaderboard())
+                players = await databaseService.UpdateTopPlayers();
+            else
+                players = databaseService.Leaderboard;
+
+            CreateFields(players);
+        }
+
+        private void CreateFields(IEnumerable<LeaderboardPlayer> leaderboardPlayers)
+        {
+            PlayerLeaderboardField field;
+            foreach (var player in leaderboardPlayers)
+            {
+                field = Instantiate(fieldPrefab, content);
+                field.SetPlayer(player.Nickname, player.Score);
+            }
+        }
     }
-    
-    
-  }
 }

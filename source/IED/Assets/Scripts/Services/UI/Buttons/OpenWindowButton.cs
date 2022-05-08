@@ -5,22 +5,30 @@ using UnityEngine.UI;
 
 namespace Services.UI.Buttons
 {
-  public class OpenWindowButton : MonoBehaviour
-  {
-    [SerializeField] private Button button;
-    [SerializeField] private WindowId openWindowId;
-    protected IWindowsService windowsService;
+    public class OpenWindowButton : MonoBehaviour
+    {
+        [SerializeField] private Button button;
+        [SerializeField] private WindowId openWindowId;
+        protected IWindowsService windowsService;
 
-    public void Construct(IWindowsService windowsService) => 
-      this.windowsService = windowsService;
+        private void Awake()
+        {
+            button.onClick.AddListener(Open);
+        }
 
-    private void Awake() => 
-      button.onClick.AddListener(Open);
+        private void OnDestroy()
+        {
+            button.onClick.RemoveListener(Open);
+        }
 
-    private void OnDestroy() => 
-      button.onClick.RemoveListener(Open);
+        public void Construct(IWindowsService windowsService)
+        {
+            this.windowsService = windowsService;
+        }
 
-    protected virtual void Open() => 
-      windowsService.Open(openWindowId);
-  }
+        protected virtual void Open()
+        {
+            windowsService.Open(openWindowId);
+        }
+    }
 }

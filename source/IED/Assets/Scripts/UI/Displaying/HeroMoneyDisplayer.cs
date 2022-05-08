@@ -4,23 +4,27 @@ using UnityEngine;
 
 namespace UI.Windows.Inventories
 {
-  public class HeroMoneyDisplayer : MonoBehaviour
-  {
-    [SerializeField] private TextMeshProUGUI moneyCountText;
-    
-    private PlayerMoney money;
-
-    public void Construct(PlayerMoney money)
+    public class HeroMoneyDisplayer : MonoBehaviour
     {
-      this.money = money;
-      this.money.Changed += DisplayMoneyCount;
-      DisplayMoneyCount();
+        [SerializeField] private TextMeshProUGUI moneyCountText;
+
+        private PlayerMoney money;
+
+        public void Construct(PlayerMoney money)
+        {
+            this.money = money;
+            this.money.Changed += DisplayMoneyCount;
+            DisplayMoneyCount();
+        }
+
+        public void Cleanup()
+        {
+            money.Changed -= DisplayMoneyCount;
+        }
+
+        private void DisplayMoneyCount()
+        {
+            moneyCountText.text = money.Count.ToString();
+        }
     }
-
-    public void Cleanup() => 
-      money.Changed -= DisplayMoneyCount;
-
-    private void DisplayMoneyCount() => 
-      moneyCountText.text = money.Count.ToString();
-  }
 }

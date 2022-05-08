@@ -12,8 +12,6 @@ namespace Services.Database
         private readonly IMongoCollection<LeaderboardPlayer> _databaseCollection;
         private float _lastUpdateTime;
 
-        public IEnumerable<LeaderboardPlayer> Leaderboard { get; private set; }
-
         public DatabaseService()
         {
             var client = new MongoClient(Constants.MongoClientSettings);
@@ -22,8 +20,12 @@ namespace Services.Database
             _lastUpdateTime = -Constants.LeaderboardUpdateRange;
         }
 
-        public async void AddToLeaderboard(string nickname, int score) =>
+        public IEnumerable<LeaderboardPlayer> Leaderboard { get; private set; }
+
+        public async void AddToLeaderboard(string nickname, int score)
+        {
             await _databaseCollection.InsertOneAsync(DatabaseElement(nickname, score));
+        }
 
         public async Task<IEnumerable<LeaderboardPlayer>> UpdateTopPlayers()
         {
@@ -35,13 +37,19 @@ namespace Services.Database
             return Leaderboard;
         }
 
-        public bool IsNeedToUpdateLeaderboard() =>
-            Time.time >= _lastUpdateTime + Constants.LeaderboardUpdateRange;
+        public bool IsNeedToUpdateLeaderboard()
+        {
+            return Time.time >= _lastUpdateTime + Constants.LeaderboardUpdateRange;
+        }
 
-        private static LeaderboardPlayer DatabaseElement(string nickname, int score) =>
-            new LeaderboardPlayer(nickname, score);
+        private static LeaderboardPlayer DatabaseElement(string nickname, int score)
+        {
+            return new(nickname, score);
+        }
 
-        private void UpdateLastUpdateTime() =>
+        private void UpdateLastUpdateTime()
+        {
             _lastUpdateTime = Time.time;
+        }
     }
 }

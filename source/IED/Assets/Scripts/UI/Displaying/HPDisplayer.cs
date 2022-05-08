@@ -3,25 +3,27 @@ using UnityEngine;
 
 namespace UI.Displaying
 {
-  public class HPDisplayer : MonoBehaviour
-  {
-    [SerializeField] private UIBar hpBar;
-
-    private IHealth health;
-    
-    public void Construct(IHealth health)
+    public class HPDisplayer : MonoBehaviour
     {
-      this.health = health;
-      this.health.Changed += UpdateHpBar;
-    }
+        [SerializeField] private UIBar hpBar;
 
-    private void OnDestroy()
-    {
-      if (health != null)
-        health.Changed -= UpdateHpBar;
-    }
+        private IHealth health;
 
-    private void UpdateHpBar(float current, float max) => 
-      hpBar.SetValue(current, max);
-  }
+        private void OnDestroy()
+        {
+            if (health != null)
+                health.Changed -= UpdateHpBar;
+        }
+
+        public void Construct(IHealth health)
+        {
+            this.health = health;
+            this.health.Changed += UpdateHpBar;
+        }
+
+        private void UpdateHpBar(float current, float max)
+        {
+            hpBar.SetValue(current, max);
+        }
+    }
 }

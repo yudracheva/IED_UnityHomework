@@ -3,10 +3,10 @@ using UI.Base;
 
 namespace Services.UI.Factory
 {
-  public interface IUIFactory : IService
-  {
-    event Action<WindowId,BaseWindow> Spawned;
-    void CreateWindow(WindowId id);
-    void CreateUIRoot();
-  }
+    public interface IUIFactory : IService
+    {
+        event Action<WindowId, BaseWindow> Spawned;
+        void CreateWindow(WindowId id);
+        void CreateUIRoot();
+    }
 }

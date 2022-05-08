@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Services.UI.Buttons
 {
-  public class SwitchWindowButton : OpenWindowButton
-  {
-    [SerializeField] private WindowId closeWindowId;
-
-    protected override void Open()
+    public class SwitchWindowButton : OpenWindowButton
     {
-      windowsService.Close(closeWindowId);
-      base.Open();
+        [SerializeField] private WindowId closeWindowId;
+
+        protected override void Open()
+        {
+            windowsService.Close(closeWindowId);
+            base.Open();
+        }
     }
-  }
 }

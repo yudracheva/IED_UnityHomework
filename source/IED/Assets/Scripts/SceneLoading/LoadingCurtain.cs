@@ -16,25 +16,28 @@ namespace SceneLoading
             DontDestroyOnLoad(this);
         }
 
-        public void Hide() => 
+        public void Hide()
+        {
             StartCoroutine(DoFade(hideCurve, OnHide));
+        }
 
         public void Show()
         {
             ChangeRaycastState(true);
             StartCoroutine(DoFade(showCurve, OnShow));
         }
-            
+
 
         private IEnumerator DoFade(AnimationCurve curve, Action callback = null)
         {
             float time = 0;
-            while (time < curve.keys[curve.length-1].time)
+            while (time < curve.keys[curve.length - 1].time)
             {
                 canvasGroup.alpha = curve.Evaluate(time);
                 time += Time.deltaTime;
                 yield return null;
             }
+
             callback?.Invoke();
         }
 
@@ -49,7 +52,9 @@ namespace SceneLoading
             IsShown = true;
         }
 
-        private void ChangeRaycastState(bool isEnable) => 
+        private void ChangeRaycastState(bool isEnable)
+        {
             canvasGroup.blocksRaycasts = isEnable;
+        }
     }
 }

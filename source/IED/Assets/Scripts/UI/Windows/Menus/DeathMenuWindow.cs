@@ -8,59 +8,69 @@ using UnityEngine.UI;
 
 namespace UI.Windows.Menus
 {
-  public class DeathMenuWindow : BaseWindow
-  {
-    [SerializeField] private TMP_InputField nicknameInputField;
-    [SerializeField] private TextMeshProUGUI leaderboardTipText;
-    [SerializeField] private Button saveScoreButton;
-    [SerializeField] private Button menuButton;
-    
-    private IScoreService scoreService;
-    private IGameStateMachine gameStateMachine;
-
-    public void Construct(IGameStateMachine gameStateMachine, IScoreService scoreService)
+    public class DeathMenuWindow : BaseWindow
     {
-      this.gameStateMachine = gameStateMachine;
-      this.scoreService = scoreService;
-    }
+        [SerializeField] private TMP_InputField nicknameInputField;
+        [SerializeField] private TextMeshProUGUI leaderboardTipText;
+        [SerializeField] private Button saveScoreButton;
+        [SerializeField] private Button menuButton;
+        
+        private IGameStateMachine _gameStateMachine;
+        private IScoreService _scoreService;
 
-    public override async void Open()
-    {
-      if (await scoreService.IsPLayerInTop())
-        ChangeSaveScoreElementsActive(true);
-      base.Open();
-    }
+        public void Construct(IGameStateMachine gameStateMachine, IScoreService scoreService)
+        {
+            _gameStateMachine = gameStateMachine;
+            _scoreService = scoreService;
+        }
 
-    protected override void Subscribe()
-    {
-      base.Subscribe();
-      menuButton.onClick.AddListener(LoadMenu);
-      saveScoreButton.onClick.AddListener(SaveScore);
-    }
+        public override async void Open()
+        {
+            if (await _scoreService.IsPLayerInTop())
+                ChangeSaveScoreElementsActive(true);
 
-    protected override void Cleanup()
-    {
-      base.Cleanup();
-      menuButton.onClick.RemoveListener(LoadMenu);
-      saveScoreButton.onClick.RemoveListener(SaveScore);
-    }
+            Time.timeScale = 0;
+            base.Open();
+        }
+        
+        public override void Close()
+        {
+            Time.timeScale = 1;
+            base.Close();
+        }
 
-    private void SaveScore()
-    {
-      if (nicknameInputField.text.Length > 0)
-        scoreService.SavePlayerInLeaderboard(nicknameInputField.text);
-      
-      ChangeSaveScoreElementsActive(false);
-    }
+        protected override void Subscribe()
+        {
+            base.Subscribe();
+            menuButton.onClick.AddListener(LoadMenu);
+            saveScoreButton.onClick.AddListener(SaveScore);
+        }
 
-    private void ChangeSaveScoreElementsActive(bool isActive)
-    {
-      nicknameInputField.gameObject.SetActive(isActive);
-      saveScoreButton.gameObject.SetActive(isActive);
-      leaderboardTipText.gameObject.SetActive(isActive);
-    }
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            menuButton.onClick.RemoveListener(LoadMenu);
+            saveScoreButton.onClick.RemoveListener(SaveScore);
+        }
 
-    private void LoadMenu() => 
-      gameStateMachine.Enter<MainMenuState>();
-  }
+        private void SaveScore()
+        {
+            if (nicknameInputField.text.Length > 0)
+                _scoreService.SavePlayerInLeaderboard(nicknameInputField.text);
+
+            ChangeSaveScoreElementsActive(false);
+        }
+
+        private void ChangeSaveScoreElementsActive(bool isActive)
+        {
+            nicknameInputField.gameObject.SetActive(isActive);
+            saveScoreButton.gameObject.SetActive(isActive);
+            leaderboardTipText.gameObject.SetActive(isActive);
+        }
+
+        private void LoadMenu()
+        {
+            _gameStateMachine.Enter<MainMenuState>();
+        }
+    }
 }

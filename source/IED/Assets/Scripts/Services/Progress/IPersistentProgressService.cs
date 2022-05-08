@@ -2,9 +2,9 @@
 
 namespace Services.Progress
 {
-  public interface IPersistentProgressService : IService
-  {
-    Player Player { get; }
-    void SetPlayerToDefault();
-  }
+    public interface IPersistentProgressService : IService
+    {
+        Player Player { get; }
+        void SetPlayerToDefault();
+    }
 }

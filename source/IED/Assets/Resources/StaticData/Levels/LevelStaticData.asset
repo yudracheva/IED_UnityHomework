@@ -15,13 +15,13 @@ MonoBehaviour:
   LevelKey: Game
   EnemySpawners:
   - Id: Game_5e950c6b-aa3d-4188-896f-fdc73ecef651
-    Position: {x: 12.37, y: -4.5, z: 43.53}
+    Position: {x: 12.37, y: -3.44, z: 43.53}
   - Id: Game_38b1bbc1-a5d6-4843-bddf-cec868c4e683
-    Position: {x: -17.12, y: -4.5, z: 43.53}
+    Position: {x: -17.12, y: -3.44, z: 43.53}
   - Id: Game_18accdd9-0c6c-4511-b366-b6502f42bae4
-    Position: {x: 12.37, y: -4.5, z: 72.25}
+    Position: {x: 12.37, y: -3.44, z: 72.25}
   - Id: Game_c0ef6009-d639-4fee-8a80-6b31675bd70a
-    Position: {x: -17.12, y: -4.5, z: 72.05}
+    Position: {x: -17.12, y: -3.44, z: 72.05}
   BonusSpawners:
   - Id: Game_c06a3a5d-d47e-44ca-95ae-9e344a541ffa
     Position: {x: 12.37, y: -4.5, z: 62.75}

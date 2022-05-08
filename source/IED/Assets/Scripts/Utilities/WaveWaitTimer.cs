@@ -4,24 +4,24 @@ using UnityEngine;
 
 namespace Utilities
 {
-  public class WaveWaitTimer : MonoBehaviour
-  {
-    public event Action TimeOut;
-
-    private void Awake()
+    public class WaveWaitTimer : MonoBehaviour
     {
-      DontDestroyOnLoad(this);
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
 
-    public void StartWait(float time)
-    {
-      StartCoroutine(Wait(time));
-    }
+        public event Action TimeOut;
 
-    private IEnumerator Wait(float time)
-    {
-      yield return new WaitForSeconds(time);
-      TimeOut?.Invoke();
+        public void StartWait(float time)
+        {
+            StartCoroutine(Wait(time));
+        }
+
+        private IEnumerator Wait(float time)
+        {
+            yield return new WaitForSeconds(time);
+            TimeOut?.Invoke();
+        }
     }
-  }
 }

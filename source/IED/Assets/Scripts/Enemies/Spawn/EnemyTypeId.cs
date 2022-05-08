@@ -1,7 +1,7 @@
 ﻿namespace Enemies.Spawn
 {
-  public enum EnemyTypeId
-  {
-    Guard
-  }
+    public enum EnemyTypeId
+    {
+        Guard
+    }
 }

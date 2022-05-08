@@ -1,26 +1,24 @@
 ﻿namespace StateMachines
 {
-  public class StateMachine
-  {
-    private BaseStateMachineState currentState;
-
-    public BaseStateMachineState State => currentState;
-        
-    private void ExitState()
+    public class StateMachine
     {
-      currentState.Exit();
-    }
+        public BaseStateMachineState State { get; private set; }
 
-    public void Initialize(BaseStateMachineState state)
-    {
-      currentState = state;
-      currentState.Enter();
-    }
+        private void ExitState()
+        {
+            State.Exit();
+        }
 
-    public void ChangeState(BaseStateMachineState newState)
-    {
-      ExitState();
-      Initialize(newState);
+        public void Initialize(BaseStateMachineState state)
+        {
+            State = state;
+            State.Enter();
+        }
+
+        public void ChangeState(BaseStateMachineState newState)
+        {
+            ExitState();
+            Initialize(newState);
+        }
     }
-  }
 }

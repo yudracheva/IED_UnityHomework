@@ -1,8 +1,8 @@
 ﻿namespace Loots
 {
-  public enum StackableType
-  {
-    Stackable,
-    NonStackable
-  }
+    public enum StackableType
+    {
+        Stackable,
+        NonStackable
+    }
 }

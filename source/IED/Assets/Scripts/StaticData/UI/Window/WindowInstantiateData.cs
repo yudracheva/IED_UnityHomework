@@ -4,10 +4,10 @@ using UI.Base;
 
 namespace StaticData.UI
 {
-  [Serializable]
-  public struct WindowInstantiateData
-  {
-    public WindowId ID;
-    public BaseWindow Window;
-  }
+    [Serializable]
+    public struct WindowInstantiateData
+    {
+        public WindowId ID;
+        public BaseWindow Window;
+    }
 }

@@ -5,95 +5,90 @@ using StaticData.Loot.Items;
 
 namespace Services.PlayerData
 {
-  public class Equipment
-  {
-    private readonly PlayerCharacteristics playerCharacteristics;
-
-    private EquipmentSlot[] equipmentSlots;
-
-    public IEnumerable<EquipmentSlot> Slots => equipmentSlots;
-
-    public event Action Changed;
-
-    public Equipment(PlayerCharacteristics playerCharacteristics, LootType[] slots)
+    public class Equipment
     {
-      this.playerCharacteristics = playerCharacteristics;
-      CreateSlots(slots);
-    }
+        private readonly PlayerCharacteristics playerCharacteristics;
 
-    public void ReinitSlots(LootType[] slots) => 
-      CreateSlots(slots);
+        private EquipmentSlot[] equipmentSlots;
 
-    public bool IsCanEquipItem(ItemStaticData item)
-    {
-      for (var i = 0; i < equipmentSlots.Length; i++)
-      {
-        if (IsSameEmptyItemSlot(item, equipmentSlots[i]))
-          return true;
-      }
-      return false;
-    }
-
-    public void EquipItem(ItemStaticData item)
-    {
-      for (var i = 0; i < equipmentSlots.Length; i++)
-      {
-        if (IsSameEmptyItemSlot(item, equipmentSlots[i]))
+        public Equipment(PlayerCharacteristics playerCharacteristics, LootType[] slots)
         {
-          equipmentSlots[i].PutItem(item);
-          IncCharacteristics(item.Characteristics);
-          NotifyAboutChange();
-          break;
+            this.playerCharacteristics = playerCharacteristics;
+            CreateSlots(slots);
         }
-      }
-    }
 
-    public void RemoveItem(ItemStaticData item)
-    {
-      for (var i = 0; i < equipmentSlots.Length; i++)
-      {
-        if (IsSameItem(item, equipmentSlots[i]))
+        public IEnumerable<EquipmentSlot> Slots => equipmentSlots;
+
+        public event Action Changed;
+
+        public void ReinitSlots(LootType[] slots)
         {
-          equipmentSlots[i].RemoveItem();
-          ReduceCharacteristics(item.Characteristics);
-          NotifyAboutChange();
-          break;
+            CreateSlots(slots);
         }
-      }
+
+        public bool IsCanEquipItem(ItemStaticData item)
+        {
+            for (var i = 0; i < equipmentSlots.Length; i++)
+                if (IsSameEmptyItemSlot(item, equipmentSlots[i]))
+                    return true;
+            return false;
+        }
+
+        public void EquipItem(ItemStaticData item)
+        {
+            for (var i = 0; i < equipmentSlots.Length; i++)
+                if (IsSameEmptyItemSlot(item, equipmentSlots[i]))
+                {
+                    equipmentSlots[i].PutItem(item);
+                    IncCharacteristics(item.Characteristics);
+                    NotifyAboutChange();
+                    break;
+                }
+        }
+
+        public void RemoveItem(ItemStaticData item)
+        {
+            for (var i = 0; i < equipmentSlots.Length; i++)
+                if (IsSameItem(item, equipmentSlots[i]))
+                {
+                    equipmentSlots[i].RemoveItem();
+                    ReduceCharacteristics(item.Characteristics);
+                    NotifyAboutChange();
+                    break;
+                }
+        }
+
+        private void ReduceCharacteristics(Characteristic[] itemCharacteristics)
+        {
+            for (var i = 0; i < itemCharacteristics.Length; i++)
+                playerCharacteristics.ReduceCharacteristic(itemCharacteristics[i].Type, itemCharacteristics[i].Value);
+        }
+
+        private void IncCharacteristics(Characteristic[] itemCharacteristics)
+        {
+            for (var i = 0; i < itemCharacteristics.Length; i++)
+                playerCharacteristics.IncCharacteristic(itemCharacteristics[i].Type, itemCharacteristics[i].Value);
+        }
+
+        private bool IsSameItem(ItemStaticData item, EquipmentSlot slot)
+        {
+            return slot.Item != null && slot.Item == item;
+        }
+
+        private bool IsSameEmptyItemSlot(ItemStaticData item, EquipmentSlot slot)
+        {
+            return slot.Item == null && slot.LootType == item.Type;
+        }
+
+        private void CreateSlots(LootType[] slots)
+        {
+            equipmentSlots = new EquipmentSlot[slots.Length];
+            for (var i = 0; i < slots.Length; i++) equipmentSlots[i] = new EquipmentSlot(slots[i]);
+        }
+
+        private void NotifyAboutChange()
+        {
+            Changed?.Invoke();
+        }
     }
-
-    private void ReduceCharacteristics(Characteristic[] itemCharacteristics)
-    {
-      for (var i = 0; i < itemCharacteristics.Length; i++)
-      {
-        playerCharacteristics.ReduceCharacteristic(itemCharacteristics[i].Type, itemCharacteristics[i].Value);
-      }
-    }
-
-    private void IncCharacteristics(Characteristic[] itemCharacteristics)
-    {
-      for (var i = 0; i < itemCharacteristics.Length; i++)
-      {
-        playerCharacteristics.IncCharacteristic(itemCharacteristics[i].Type, itemCharacteristics[i].Value);
-      }
-    }
-
-    private bool IsSameItem(ItemStaticData item, EquipmentSlot slot) => 
-      slot.Item != null && slot.Item == item;
-
-    private bool IsSameEmptyItemSlot(ItemStaticData item, EquipmentSlot slot) => 
-      slot.Item == null && slot.LootType == item.Type;
-
-    private void CreateSlots(LootType[] slots)
-    {
-      equipmentSlots = new EquipmentSlot[slots.Length];
-      for (var i = 0; i < slots.Length; i++)
-      {
-        equipmentSlots[i] = new EquipmentSlot(slots[i]);
-      }
-    }
-
-    private void NotifyAboutChange() => 
-      Changed?.Invoke();
-  }
 }

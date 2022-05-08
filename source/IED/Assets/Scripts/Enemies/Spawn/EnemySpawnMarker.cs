@@ -2,8 +2,8 @@
 
 namespace Enemies.Spawn
 {
-  [RequireComponent(typeof(UniqueId))]
-  public class EnemySpawnMarker : MonoBehaviour
-  {
-  }
+    [RequireComponent(typeof(UniqueId))]
+    public class EnemySpawnMarker : MonoBehaviour
+    {
+    }
 }

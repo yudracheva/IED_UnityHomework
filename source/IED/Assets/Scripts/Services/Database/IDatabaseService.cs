@@ -8,9 +8,9 @@ namespace Services.Database
         IEnumerable<LeaderboardPlayer> Leaderboard { get; }
 
         void AddToLeaderboard(string nickname, int score);
-        
+
         Task<IEnumerable<LeaderboardPlayer>> UpdateTopPlayers();
-        
+
         bool IsNeedToUpdateLeaderboard();
     }
 }

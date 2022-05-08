@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645a6e4c4d013374fb32bbcc3acf84f3, type: 3}
   m_Name: SpawnData
   m_EditorClassIdentifier: 
-  HeroPrefab: {fileID: 131680, guid: 11ffba29df14c054aa5a2695b18e9f59, type: 3}
-  SpawnPoint: {x: -1.9987715, y: -3.908, z: 64.618385}
+  HeroPrefab: {fileID: 131680, guid: 5968d0802ca2e3a489773ae51ee5fabe, type: 3}
+  SpawnPoint: {x: -2.29, y: -4.888, z: 45.93}
