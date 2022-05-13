@@ -27,6 +27,7 @@ namespace GameStates.States
 
         public void Enter()
         {
+            Time.timeScale = 1;
             _sceneLoader.Load(Constants.MainMenuScene, OnLoaded);
         }
 

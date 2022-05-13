@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UI.Windows.Inventories
+namespace UI.Displaying
 {
     public class HeroMoneyDisplayer : MonoBehaviour
     {

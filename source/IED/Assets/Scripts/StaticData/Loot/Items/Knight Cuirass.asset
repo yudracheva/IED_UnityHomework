@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8def1af7cd4addb33cb8ccc0fafa98, type: 3}
   m_Name: Knight Cuirass
   m_EditorClassIdentifier: 
+  ID: f2e72bb2-b74a-4cfa-a214-92e3b2386bbb
   Name: Knight Cuirass
   Description: Knight Cuirass
-  Icon: {fileID: 21300000, guid: beb747d823319b246896a8257c98c490, type: 3}
+  Icon: {fileID: 21300000, guid: 65a9410232dbc154c9cec96a5fbd07b1, type: 3}
   Rarity: 2
   Type: 4
+  StackableType: 0
   Characteristics:
   - Type: 2
     Value: 50
+  SellCost: 50
+  BuyCost: 100
   Prefab: {fileID: 6227877484928016717, guid: 680b0c0754c92bf41a9a77d7c0c9d6e0, type: 3}

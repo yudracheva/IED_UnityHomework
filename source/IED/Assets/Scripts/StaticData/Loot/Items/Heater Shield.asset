@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8def1af7cd4addb33cb8ccc0fafa98, type: 3}
   m_Name: Heater Shield
   m_EditorClassIdentifier: 
+  ID: 7777b2d3-af12-4f70-8862-0e6c8b3487e7
   Name: Heater Shield
   Description: Heater Shield
-  Icon: {fileID: 21300000, guid: a8c31c3644b406d4f8eccd1ff21a737d, type: 3}
+  Icon: {fileID: 21300000, guid: f8fceb41b68ef0a4ea35add24f4635e0, type: 3}
   Rarity: 3
   Type: 2
+  StackableType: 0
   Characteristics:
   - Type: 2
     Value: 200
   - Type: 1
     Value: 50
+  SellCost: 50
+  BuyCost: 100
   Prefab: {fileID: 5149653882281482790, guid: a934971c2b150f845ad965c26f77ecf1, type: 3}

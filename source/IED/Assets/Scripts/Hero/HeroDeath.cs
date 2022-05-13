@@ -26,7 +26,7 @@ namespace Hero
 
         private void Dead()
         {
-            _audioSource.clip = _heroSongs.DeathSong;
+            _audioSource.clip = _heroSongs.deathSong;
             _audioSource.Play();
 
             input.Disable();

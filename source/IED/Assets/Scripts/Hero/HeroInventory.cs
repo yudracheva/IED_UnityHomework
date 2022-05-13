@@ -6,17 +6,17 @@ namespace Hero
 {
     public class HeroInventory : MonoBehaviour
     {
-        private Inventory inventory;
+        private Inventory _inventory;
 
         public void Construct(Inventory inventory)
         {
-            this.inventory = inventory;
+            this._inventory = inventory;
         }
 
         public bool IsCanAddItem(ItemStaticData item) =>
-            inventory.IsCanAddItem(item);
+            _inventory.IsCanAddItem(item);
 
         public void AddItem(ItemStaticData item) =>
-            inventory.AddItem(item);
+            _inventory.AddItem(item);
     }
 }

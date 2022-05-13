@@ -19,6 +19,7 @@ using Services.Random;
 using Services.Score;
 using Services.Shop;
 using Services.StaticData;
+using Services.StatisticCounter;
 using Services.UI.Factory;
 using Services.UI.Windows;
 using Services.UserSetting;
@@ -75,9 +76,15 @@ namespace GameStates.States
             RegisterBonusFactory();
             RegisterBonusSpawner();
             RegisterGameFactory();
+            RegisterStatisticCounterService();
             RegisterWaveService(coroutineRunner);
             RegisterLootSpawner();
             RegisterLootService(lootContainer);
+        }
+
+        private void RegisterStatisticCounterService()
+        {
+            _services.RegisterSingle<IStatisticCounterService>(new StatisticCounterService(_services.Single<IPersistentProgressService>()));
         }
 
         private void RegisterUserSettings()=>
@@ -85,7 +92,7 @@ namespace GameStates.States
 
         private void RegisterWaveService(ICoroutineRunner coroutineRunner) =>
             _services.RegisterSingle<IWaveServices>(new WaveServices(_services.Single<IEnemySpawner>(), coroutineRunner,
-                _services.Single<IBonusSpawner>()));
+                _services.Single<IBonusSpawner>(), _services.Single<IStatisticCounterService>()));
 
         private void RegisterEnemiesSpawner() =>
             _services.RegisterSingle<IEnemySpawner>(new EnemySpawner(_services.Single<IEnemiesFactory>(),

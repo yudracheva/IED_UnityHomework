@@ -15,8 +15,9 @@ namespace Hero
 
         protected void Awake()
         {
-            _heroSongs = transform.parent.GetComponentInChildren<HeroSongs>();
-            _audioSource = transform.parent.GetComponentInChildren<AudioSource>();
+            var parentTransform = transform.parent;
+            _heroSongs = parentTransform.GetComponentInChildren<HeroSongs>();
+            _audioSource = parentTransform.GetComponentInChildren<AudioSource>();
         }
 
         public void TakeDamage(float damage, Vector3 attackPosition)
@@ -29,7 +30,7 @@ namespace Hero
 
         private void TakeDamage(float damage)
         {
-            _audioSource.clip = _heroSongs.ImpactSong;
+            _audioSource.clip = _heroSongs.impactSong;
             _audioSource.Play();
             
             hero.Impact();

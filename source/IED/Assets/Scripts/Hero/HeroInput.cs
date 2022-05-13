@@ -8,48 +8,48 @@ namespace Hero
     {
         [SerializeField] private HeroStateMachine stateMachine;
 
-        private IInputService inputService;
-        private Camera mainCamera;
-        private readonly RaycastHit[] hits = new RaycastHit[1];
-        private bool isDisabled;
+        private IInputService _inputService;
+        private Camera _mainCamera;
+        private readonly RaycastHit[] _hits = new RaycastHit[1];
+        private bool _isDisabled;
 
         public void Construct(IInputService inputService)
         {
-            this.inputService = inputService;
+            _inputService = inputService;
             inputService.Enable();
         }
 
         private void Start()
         {
-            mainCamera = Camera.main;
+            _mainCamera = Camera.main;
         }
 
         private void OnDestroy()
         {
-            inputService.Disable();
+            _inputService.Disable();
         }
 
         private void Update()
         {
-            if (isDisabled)
+            if (_isDisabled)
                 return;
             
-            if (inputService.IsAttackButtonDown())
+            if (_inputService.IsAttackButtonDown())
                 stateMachine.SetAttackState();
 
-            if (inputService.IsRollButtonDown())
+            if (_inputService.IsRollButtonDown())
                 stateMachine.SetRollState();
 
-            stateMachine.SetIsBlocking(inputService.IsBlockButtonPressed());
-            stateMachine.SetMoveAxis(inputService.Axis);
+            stateMachine.SetIsBlocking(_inputService.IsBlockButtonPressed());
+            stateMachine.SetMoveAxis(_inputService.Axis);
             stateMachine.SetRotate(Rotation());
         }
 
         private float Rotation()
         {
-            var ray = mainCamera.ScreenPointToRay(inputService.ClickPosition);
-            if (Physics.RaycastNonAlloc(ray, hits) > 0)
-                return Angle(hits[0].point);
+            var ray = _mainCamera.ScreenPointToRay(_inputService.ClickPosition);
+            if (Physics.RaycastNonAlloc(ray, _hits) > 0)
+                return Angle(_hits[0].point);
 
             return 0;
         }
@@ -64,7 +64,7 @@ namespace Hero
 
         public void Disable()
         {
-            isDisabled = true;
+            _isDisabled = true;
             stateMachine.SetMoveAxis(Vector2.zero);
             stateMachine.SetRotate(0f);
         }

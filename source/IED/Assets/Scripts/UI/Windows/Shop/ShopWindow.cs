@@ -5,6 +5,7 @@ using UI.Base;
 using UI.Windows.Inventories;
 using UnityEngine;
 using UnityEngine.UI;
+using UI.Displaying;
 
 namespace UI.Windows
 {
@@ -118,8 +119,8 @@ namespace UI.Windows
 
         private void ChangeBuyButtonActiveState(bool isActive)
         {
-            if (closeButton.gameObject.activeSelf != isActive)
-                closeButton.gameObject.SetActive(isActive);
+            if (buyButton.gameObject.activeSelf != isActive)
+                buyButton.gameObject.SetActive(isActive);
         }
 
         private void ResetLastClickedItem()

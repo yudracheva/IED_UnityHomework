@@ -3,6 +3,7 @@ using StaticData.Loot.Items;
 using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
+using UI.Displaying;
 
 namespace UI.Windows.Inventories
 {

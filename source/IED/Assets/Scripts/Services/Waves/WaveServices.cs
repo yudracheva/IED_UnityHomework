@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Enemies.Entity;
 using Enemies.Spawn;
 using Services.Bonuses;
+using Services.StatisticCounter;
 using StaticData.Level;
 using UnityEngine;
 
@@ -9,36 +11,39 @@ namespace Services.Waves
 {
     public class WaveServices : IWaveServices
     {
-        private readonly IBonusSpawner bonusSpawner;
-        private readonly ICoroutineRunner coroutineRunner;
-        private readonly IEnemySpawner enemiesSpawner;
+        private readonly IBonusSpawner _bonusSpawner;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IEnemySpawner _enemiesSpawner;
+        private readonly IStatisticCounterService _statisticCounterService;
+        
+        private int _currentEnemiesCount;
+        private int _currentWaveIndex;
+        private LevelWaveStaticData _waves;
 
-        private int currentEnemiesCount;
-        private int currentWaveIndex;
-        private LevelWaveStaticData waves;
-
-        public WaveServices(IEnemySpawner spawner, ICoroutineRunner coroutineRunner, IBonusSpawner bonusSpawner)
+        public WaveServices(IEnemySpawner spawner, ICoroutineRunner coroutineRunner, IBonusSpawner bonusSpawner, IStatisticCounterService statisticCounterService)
         {
-            enemiesSpawner = spawner;
-            this.coroutineRunner = coroutineRunner;
-            this.bonusSpawner = bonusSpawner;
-            enemiesSpawner.Spawned += OnEnemySpawned;
+            _statisticCounterService = statisticCounterService ?? throw new ArgumentNullException(nameof(statisticCounterService));
+            _enemiesSpawner = spawner ?? throw new ArgumentNullException(nameof(spawner));
+            _coroutineRunner = coroutineRunner ?? throw new ArgumentNullException(nameof(coroutineRunner));
+            _bonusSpawner = bonusSpawner ?? throw new ArgumentNullException(nameof(bonusSpawner));
+            
+            _enemiesSpawner.Spawned += OnEnemySpawned;
         }
 
         public void Cleanup()
         {
-            enemiesSpawner.Spawned -= OnEnemySpawned;
+            _enemiesSpawner.Spawned -= OnEnemySpawned;
         }
 
         public void Start()
         {
-            currentWaveIndex = 0;
-            coroutineRunner.StartCoroutine(StartWave(waves.FirstWaveDelay));
+            _currentWaveIndex = 0;
+            _coroutineRunner.StartCoroutine(StartWave(_waves.FirstWaveDelay));
         }
 
         public void SetLevelWaves(LevelWaveStaticData wavesData)
         {
-            waves = wavesData;
+            _waves = wavesData;
         }
 
         private void OnEnemySpawned(GameObject enemy)
@@ -48,15 +53,19 @@ namespace Services.Waves
 
         private void OnEnemyDead(EnemyTypeId enemyTypeId, GameObject enemy)
         {
+            _statisticCounterService.AddDeathEnemy();
             enemy.GetComponent<EnemyDeath>().Happened -= OnEnemyDead;
-            currentEnemiesCount--;
-            if (currentEnemiesCount <= 0)
-                CompleteWave();
+            _currentEnemiesCount--;
+            if (_currentEnemiesCount <= 0)
+            {
+                _statisticCounterService.AddWave();
+                CompleteWave();   
+            }
         }
 
         private void CompleteWave()
         {
-            coroutineRunner.StartCoroutine(StartWave(waves.Waves[currentWaveIndex].WaveWaitTime));
+            _coroutineRunner.StartCoroutine(StartWave(_waves.Waves[_currentWaveIndex].WaveWaitTime));
             SpawnBonuses();
             IncWaveIndex();
         }
@@ -65,22 +74,22 @@ namespace Services.Waves
         {
             yield return new WaitForSeconds(delay);
 
-            enemiesSpawner.Spawn(waves.Waves[currentWaveIndex].Enemies);
-            currentEnemiesCount = 0;
-            for (var i = 0; i < waves.Waves[currentWaveIndex].Enemies.Length; i++)
-                currentEnemiesCount += waves.Waves[currentWaveIndex].Enemies[i].Count;
+            _enemiesSpawner.Spawn(_waves.Waves[_currentWaveIndex].Enemies);
+            _currentEnemiesCount = 0;
+            for (var i = 0; i < _waves.Waves[_currentWaveIndex].Enemies.Length; i++)
+                _currentEnemiesCount += _waves.Waves[_currentWaveIndex].Enemies[i].Count;
         }
 
         private void SpawnBonuses()
         {
-            var bonuses = waves.Waves[currentWaveIndex].Bonuses;
-            for (var i = 0; i < bonuses.Length; i++) bonusSpawner.SpawnBonus(bonuses[i]);
+            var bonuses = _waves.Waves[_currentWaveIndex].Bonuses;
+            for (var i = 0; i < bonuses.Length; i++) _bonusSpawner.SpawnBonus(bonuses[i]);
         }
 
         private void IncWaveIndex()
         {
-            currentWaveIndex++;
-            currentWaveIndex = Mathf.Clamp(currentWaveIndex, 0, waves.Waves.Length);
+            _currentWaveIndex++;
+            _currentWaveIndex = Mathf.Clamp(_currentWaveIndex, 0, _waves.Waves.Length);
         }
     }
 }

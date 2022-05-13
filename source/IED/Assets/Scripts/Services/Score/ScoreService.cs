@@ -18,7 +18,10 @@ namespace Services.Score
         private readonly PlayerScore playerScore;
         private readonly ScoreStaticData scoreStaticData;
 
-        public ScoreService(IEnemySpawner enemySpawner, ScoreStaticData scoreStaticData, PlayerScore playerScore,
+        public ScoreService(
+            IEnemySpawner enemySpawner,
+            ScoreStaticData scoreStaticData,
+            PlayerScore playerScore,
             IDatabaseService databaseService)
         {
             this.enemySpawner = enemySpawner;

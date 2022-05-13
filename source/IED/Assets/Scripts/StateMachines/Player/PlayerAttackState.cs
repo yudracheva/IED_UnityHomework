@@ -78,7 +78,7 @@ namespace StateMachines.Player
 
         private void SongAttack()
         {
-            _audioSource.clip = _heroSongs.AttackSong;
+            _audioSource.clip = _heroSongs.attackSong;
             _audioSource.Play();
         }
         

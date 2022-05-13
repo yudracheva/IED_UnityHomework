@@ -15,7 +15,6 @@ using Services.UserSetting;
 using StaticData.Level;
 using Systems.Healths;
 using UI.Displaying;
-using UI.Windows.Inventories;
 using UnityEngine;
 
 namespace Services.Factories.GameFactories
@@ -76,8 +75,9 @@ namespace Services.Factories.GameFactories
                 _progressService.Player.Characteristics);
 
             heroGameObject.GetComponent<HeroMoney>().Construct(_progressService.Player.Monies);
-
             heroGameObject.GetComponent<HeroInventory>().Construct(_progressService.Player.Inventory);
+            heroGameObject.GetComponent<HeroNumberOfWaves>().Construct(_progressService.Player.NumberOfWaves);
+            heroGameObject.GetComponent<HeroNumberOfKilledEnemies>().Construct(_progressService.Player.NumberOfKilledEnemies);
 
             heroGameObject.GetComponent<HeroDeath>().Construct(_deathService, health);
             return heroGameObject;
@@ -90,6 +90,8 @@ namespace Services.Factories.GameFactories
             hud.GetComponentInChildren<StaminaDisplayer>().Construct(hero.GetComponentInChildren<IStamina>());
             hud.GetComponentInChildren<HeroMoneyDisplayer>().Construct(_progressService.Player.Monies);
             hud.GetComponentInChildren<HeroScoreDisplayer>().Construct(_progressService.Player.Score);
+            hud.GetComponentInChildren<HeroWaveDisplayer>().Construct(_progressService.Player.NumberOfWaves);
+            hud.GetComponentInChildren<HeroDeathDisplayer>().Construct(_progressService.Player.NumberOfKilledEnemies);
             InitButtons(hud);
             return hud;
         }

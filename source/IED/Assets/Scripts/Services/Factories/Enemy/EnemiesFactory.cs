@@ -16,7 +16,6 @@ namespace Services.Factories.Enemy
         private readonly List<SlainedEnemy> enemiesPool;
         private readonly IStaticDataService staticData;
 
-
         public EnemiesFactory(IAssetProvider assets, IStaticDataService staticData)
         {
             this.assets = assets;

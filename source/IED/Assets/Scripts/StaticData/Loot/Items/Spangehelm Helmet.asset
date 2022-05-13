@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8def1af7cd4addb33cb8ccc0fafa98, type: 3}
   m_Name: Spangehelm Helmet
   m_EditorClassIdentifier: 
+  ID: 54ac4622-9148-4d38-bf7a-5c071a9d91ba
   Name: Spangehelm Helmet
   Description: Spangehelm Helmet
-  Icon: {fileID: 21300000, guid: 2ea1d930a12536f49acf458720d64e1b, type: 3}
+  Icon: {fileID: 21300000, guid: f8fceb41b68ef0a4ea35add24f4635e0, type: 3}
   Rarity: 2
   Type: 3
+  StackableType: 0
   Characteristics:
   - Type: 2
     Value: 10
   - Type: 1
     Value: 10
+  SellCost: 50
+  BuyCost: 100
   Prefab: {fileID: 8034490612428694156, guid: 681dad1435fa6314b879b7068af627e8, type: 3}

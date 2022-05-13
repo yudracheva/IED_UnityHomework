@@ -4,10 +4,10 @@ namespace Hero
 {
     public class HeroSongs : MonoBehaviour
     {
-        public AudioClip AttackSong;
+        public AudioClip attackSong;
         
-        public AudioClip ImpactSong;
+        public AudioClip impactSong;
         
-        public AudioClip DeathSong;
+        public AudioClip deathSong;
     }
 }

@@ -6,26 +6,26 @@ namespace Hero
 {
     public class HeroMoney : MonoBehaviour
     {
-        private PlayerMoney money;
+        private PlayerMoney _money;
         public event Action<int> Changed;
 
         public void Construct(PlayerMoney money)
         {
-            this.money = money;
-            this.money.Changed += Display;
+            _money = money;
+            _money.Changed += Display;
             Display();
         }
 
         private void OnDestroy() =>
-            money.Changed -= Display;
+            _money.Changed -= Display;
 
         public void AddMoney(int addedMoney) =>
-            money.AddMoney(addedMoney);
+            _money.AddMoney(addedMoney);
 
         public void ReduceMoney(int decedMoney) =>
-            money.ReduceMoney(decedMoney);
+            _money.ReduceMoney(decedMoney);
 
         private void Display() =>
-            Changed?.Invoke(money.Count);
+            Changed?.Invoke(_money.Count);
     }
 }

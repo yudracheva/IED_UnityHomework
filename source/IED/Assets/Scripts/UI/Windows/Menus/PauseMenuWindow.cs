@@ -1,4 +1,5 @@
-﻿using GameStates;
+﻿using System;
+using GameStates;
 using GameStates.States;
 using UI.Base;
 using UnityEngine;
@@ -10,12 +11,17 @@ namespace UI.Windows.Menus
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button closeButton;
-
-        private IGameStateMachine gameStateMachine;
+        [SerializeField] private Button quitButton;
+        [SerializeField] private GameObject confirmWindow;
+        [SerializeField] private GameObject generalWindow;
+        [SerializeField] private Button yesButton;
+        [SerializeField] private Button noButton;
+        
+        private IGameStateMachine _gameStateMachine;
 
         public void Construct(IGameStateMachine gameStateMachine)
         {
-            this.gameStateMachine = gameStateMachine;
+            _gameStateMachine = gameStateMachine ?? throw  new ArgumentNullException(nameof(gameStateMachine));
         }
 
         protected override void Subscribe()
@@ -23,6 +29,7 @@ namespace UI.Windows.Menus
             base.Subscribe();
             menuButton.onClick.AddListener(LoadMainMenu);
             closeButton.onClick.AddListener(Close);
+            quitButton.onClick.AddListener(Quit);
         }
 
         public override void Open()
@@ -42,11 +49,31 @@ namespace UI.Windows.Menus
             base.Cleanup();
             menuButton.onClick.RemoveListener(LoadMainMenu);
             closeButton.onClick.RemoveListener(Close);
+            quitButton.onClick.RemoveListener(Quit);
         }
         
+        private void Quit()
+        {
+            generalWindow.SetActive(false);
+            confirmWindow.SetActive(true);
+            yesButton.onClick.AddListener(ConfirmedQuit);
+            noButton.onClick.AddListener(RejectedQuit);
+        }
+
+        private void RejectedQuit()
+        {
+            generalWindow.SetActive(true);
+            confirmWindow.SetActive(false);
+        }
+
+        private void ConfirmedQuit()
+        {
+            Application.Quit();
+        }
+
         private void LoadMainMenu()
         {
-            gameStateMachine.Enter<MainMenuState>();
+            _gameStateMachine.Enter<MainMenuState>();
         }
     }
 }

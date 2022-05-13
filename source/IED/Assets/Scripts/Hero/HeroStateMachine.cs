@@ -17,8 +17,8 @@ namespace Hero
         [SerializeField] private HeroAttack attack;
         [SerializeField] private HeroStamina stamina;
 
-        private HeroAttackStaticData attackData;
-        private HeroImpactsStaticData impactsData;
+        private HeroAttackStaticData _attackData;
+        private HeroImpactsStaticData _impactsData;
 
         public PlayerAttackState AttackState { get; private set; }
         public PlayerHurtState ImpactState { get; private set; }
@@ -43,8 +43,8 @@ namespace Hero
             PlayerCharacteristics playerCharacteristics,
             IUserSettingService userSettingService)
         {
-            attackData = heroAttackStaticData;
-            impactsData = heroImpactsStaticData;
+            _attackData = heroAttackStaticData;
+            _impactsData = heroImpactsStaticData;
             attack.Construct(heroAttackStaticData, playerCharacteristics);
             GetComponentInChildren<AudioSource>().volume = userSettingService.GetUserSettings().ActionsVolume; 
             Initialize();
@@ -71,7 +71,7 @@ namespace Hero
                 animator: battleAnimator, 
                 hero: this, 
                 heroAttack: attack,
-                attackData: attackData, 
+                attackData: _attackData, 
                 heroStamina: stamina);
             
             ImpactState = new PlayerHurtState(
@@ -79,7 +79,7 @@ namespace Hero
                 animationName: AnimationStateConstants.IsImpact, 
                 animator: battleAnimator, 
                 hero: this, 
-                cooldown: impactsData.ImpactCooldown);
+                cooldown: _impactsData.ImpactCooldown);
             
             IdleShieldState = new PlayerIdleShieldState(
                 stateMachine: stateMachine, 
@@ -110,7 +110,7 @@ namespace Hero
                 animationName: AnimationStateConstants.IsShieldImpact,
                 animator: battleAnimator,
                 hero: this,
-                cooldown: impactsData.ShieldImpactCooldown);
+                cooldown: _impactsData.ShieldImpactCooldown);
             
             MoveState = new PlayerMoveState(
                 stateMachine: stateMachine,
