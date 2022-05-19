@@ -1,5 +1,6 @@
 ﻿using Bonuses;
 using Enemies.Spawn;
+using Loots;
 using Services.UI.Factory;
 using StaticData.Bonuses;
 using StaticData.Enemies;
@@ -24,5 +25,6 @@ namespace Services.StaticData
         ShopStaticData ForShop();
         BonusStaticData ForBonus(BonusTypeId typeId);
         ScoreStaticData ForScore();
+        MandatoryInventoryItemStaticData ForMandatoryItem(LootType key);
     }
 }

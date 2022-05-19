@@ -15,17 +15,24 @@ namespace Services.Waves
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IEnemySpawner _enemiesSpawner;
         private readonly IStatisticCounterService _statisticCounterService;
+        private readonly IKeySpawner _keySpawner;
         
         private int _currentEnemiesCount;
         private int _currentWaveIndex;
         private LevelWaveStaticData _waves;
 
-        public WaveServices(IEnemySpawner spawner, ICoroutineRunner coroutineRunner, IBonusSpawner bonusSpawner, IStatisticCounterService statisticCounterService)
+        public WaveServices(
+            IEnemySpawner spawner, 
+            ICoroutineRunner coroutineRunner, 
+            IBonusSpawner bonusSpawner, 
+            IStatisticCounterService statisticCounterService,
+            IKeySpawner keySpawner)
         {
             _statisticCounterService = statisticCounterService ?? throw new ArgumentNullException(nameof(statisticCounterService));
             _enemiesSpawner = spawner ?? throw new ArgumentNullException(nameof(spawner));
             _coroutineRunner = coroutineRunner ?? throw new ArgumentNullException(nameof(coroutineRunner));
             _bonusSpawner = bonusSpawner ?? throw new ArgumentNullException(nameof(bonusSpawner));
+            _keySpawner = keySpawner ?? throw new ArgumentNullException(nameof(keySpawner));
             
             _enemiesSpawner.Spawned += OnEnemySpawned;
         }
@@ -83,7 +90,10 @@ namespace Services.Waves
         private void SpawnBonuses()
         {
             var bonuses = _waves.Waves[_currentWaveIndex].Bonuses;
-            for (var i = 0; i < bonuses.Length; i++) _bonusSpawner.SpawnBonus(bonuses[i]);
+            foreach (var t in bonuses)
+                _bonusSpawner.SpawnBonus(t);
+            
+            _keySpawner.SpawnKey(_bonusSpawner.GetRandomPoint());
         }
 
         private void IncWaveIndex()

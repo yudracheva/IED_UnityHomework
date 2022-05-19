@@ -3,6 +3,7 @@ using System.Linq;
 using Bonuses;
 using ConstantsValue;
 using Enemies.Spawn;
+using Loots;
 using Services.UI.Factory;
 using StaticData.Bonuses;
 using StaticData.Enemies;
@@ -26,6 +27,7 @@ namespace Services.StaticData
         private Dictionary<string, EnemyLoot[]> _loots;
         private ScoreStaticData _scoreData;
         private ShopStaticData _shopData;
+        private MandatoryInventoryItemStaticData _mandatoryInventoryItemStaticData;
         private Dictionary<WindowId, WindowInstantiateData> _windows;
 
         public void Load()
@@ -34,6 +36,7 @@ namespace Services.StaticData
             _heroCharacteristics = Resources.Load<HeroBaseStaticData>(AssetsPath.HeroCharacteristicsDataPath);
             _shopData = Resources.Load<ShopStaticData>(AssetsPath.ShopDataPath);
             _scoreData = Resources.Load<ScoreStaticData>(AssetsPath.ScoreDataPath);
+            _mandatoryInventoryItemStaticData = Resources.Load<MandatoryInventoryItemStaticData>(AssetsPath.ItemsDataPath);
 
             _enemies = Resources
                 .LoadAll<EnemyStaticData>(AssetsPath.EnemiesDataPath)
@@ -113,6 +116,11 @@ namespace Services.StaticData
         public ScoreStaticData ForScore()
         {
             return _scoreData;
+        }
+
+        public MandatoryInventoryItemStaticData ForMandatoryItem(LootType key)
+        {
+            return _mandatoryInventoryItemStaticData;
         }
     }
 }

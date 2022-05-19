@@ -2,6 +2,7 @@
 using Enemies.Spawn;
 using Services.Random;
 using StaticData.Level;
+using UnityEngine;
 
 namespace Services.Bonuses
 {
@@ -23,7 +24,6 @@ namespace Services.Bonuses
             bonusFactory.Cleanup();
         }
 
-
         public void AddPoint(SpawnPoint spawnPoint)
         {
             spawnPoints.Add(spawnPoint);
@@ -33,6 +33,11 @@ namespace Services.Bonuses
         {
             for (var i = 0; i < waveBonus.Count; i++)
                 bonusFactory.SpawnBonus(waveBonus.TypeId, waveBonus.Value, RandomSpawnPoint().transform);
+        }
+
+        public GameObject GetRandomPoint()
+        {
+            return spawnPoints[randomService.Next(spawnPoints.Count)].gameObject;
         }
 
         private SpawnPoint RandomSpawnPoint()

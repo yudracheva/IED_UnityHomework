@@ -54,12 +54,14 @@ namespace Services.Factories.GameFactories
             _userSettingService = userSettingService ?? throw new ArgumentNullException(nameof(userSettingService));
         }
 
-        public GameObject CreateHero()
+        public GameObject CreateHero(bool needToReset = true)
         {
             var spawnData = _staticData.ForHero();
             heroGameObject = InstantiateObject(spawnData.HeroPrefab, spawnData.SpawnPoint);
 
-            _progressService.SetPlayerToDefault();
+            if (needToReset)
+                _progressService.SetPlayerToDefault();
+            
             var health = heroGameObject.GetComponentInChildren<IHealth>();
             health.SetHp(_progressService.Player.Characteristics.Health(),
                 _progressService.Player.Characteristics.Health());

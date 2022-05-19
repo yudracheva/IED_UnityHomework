@@ -142,7 +142,7 @@ namespace Hero
         
         public void SetAttackState()
         {
-            if (stateMachine.State.IsCanBeInterapted() && AttackState.IsCanAttack())
+            if (stateMachine.State.IsCanBeInterrupted() && AttackState.IsCanAttack())
                 stateMachine.ChangeState(AttackState);
         }
 
@@ -154,7 +154,7 @@ namespace Hero
 
         public void SetRollState()
         {
-            if (stateMachine.State.IsCanBeInterapted() && RollState.IsCanRoll())
+            if (stateMachine.State.IsCanBeInterrupted() && RollState.IsCanRoll())
                 stateMachine.ChangeState(RollState);
         }
 
@@ -163,7 +163,7 @@ namespace Hero
 
         public void Impact()
         {
-            if (ImpactState.IsKnockbackCooldown() && stateMachine.State.IsCanBeInterapted())
+            if (ImpactState.IsKnockbackCooldown() && stateMachine.State.IsCanBeInterrupted())
                 stateMachine.ChangeState(ImpactState);
         }
 

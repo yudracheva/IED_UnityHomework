@@ -4,7 +4,7 @@
     {
         protected int animationName;
 
-        public abstract bool IsCanBeInterapted();
+        public abstract bool IsCanBeInterrupted();
 
         public virtual void Enter()
         {

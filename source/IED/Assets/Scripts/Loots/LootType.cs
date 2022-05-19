@@ -7,6 +7,7 @@
         Shield = 2,
         Helmet = 3,
         Armor = 4,
-        HealPotion = 5
+        HealPotion = 5,
+        Key = 6
     }
 }

@@ -24,17 +24,19 @@ namespace GameStates
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(ISceneLoader sceneLoader, ref AllServices services, ICoroutineRunner coroutineRunner,
+        public GameStateMachine(
+            ISceneLoader sceneLoader, 
+            ref AllServices services, 
+            ICoroutineRunner coroutineRunner,
             LootContainer lootContainer)
         {
             _states = new Dictionary<Type, IExitableState>
             {
-                [typeof(BootstrapState)] =
-                    new BootstrapState(this, sceneLoader, ref services, coroutineRunner, lootContainer),
-                [typeof(LoadProgressState)] =
-                    new LoadProgressState(this, sceneLoader, services.Single<IPersistentProgressService>()),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, ref services, coroutineRunner, lootContainer),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, sceneLoader, services.Single<IPersistentProgressService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this, services.Single<IWaveServices>()),
                 [typeof(LoadGameLevelState)] = new LoadGameLevelState(
+                    services.Single<IPersistentProgressService>(),
                     sceneLoader,
                     this,
                     services.Single<IGameFactory>(),
@@ -45,8 +47,20 @@ namespace GameStates
                     services.Single<ILootSpawner>(),
                     services.Single<IShopService>(),
                     services.Single<IUserSettingService>()),
-                    [typeof(MainMenuState)] = new MainMenuState(services.Single<IUIFactory>(),
-                    services.Single<IWindowsService>(), sceneLoader, services.Single<IUserSettingService>())
+                [typeof(MainMenuState)] = new MainMenuState(services.Single<IUIFactory>(),
+                    services.Single<IWindowsService>(), sceneLoader, services.Single<IUserSettingService>()),
+                [typeof(LoadGameLevel2State)] = new LoadGameLevel2State(
+                    services.Single<IPersistentProgressService>(),
+                    sceneLoader,
+                    this,
+                    services.Single<IGameFactory>(),
+                    services.Single<IUIFactory>(),
+                    services.Single<IStaticDataService>(),
+                    services.Single<IWaveServices>(),
+                    services.Single<ILootService>(),
+                    services.Single<ILootSpawner>(),
+                    services.Single<IShopService>(),
+                    services.Single<IUserSettingService>()),
             };
         }
 

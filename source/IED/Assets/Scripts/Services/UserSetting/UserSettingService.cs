@@ -5,10 +5,11 @@ using Newtonsoft.Json;
 using UI.Audio;
 using UnityEngine;
 using GeneralUserSettings = UserSettings.GeneralUserSettings;
+using Object = UnityEngine.Object;
 
 namespace Services.UserSetting
 {
-    public class UserSettingService : MonoBehaviour, IUserSettingService
+    public class UserSettingService : IUserSettingService
     {
         private GeneralUserSettings _currentUserSettings;
         private readonly string _settingPath = Path.Combine(Application.persistentDataPath, "UserSettings.json");
@@ -17,7 +18,7 @@ namespace Services.UserSetting
         {
             if (!TryLoadSettings())
             {
-                _currentUserSettings = new GeneralUserSettings()
+                _currentUserSettings = new GeneralUserSettings() 
                 {
                     ActionsVolume = 1,
                     MusicVolume = 1
@@ -39,13 +40,13 @@ namespace Services.UserSetting
         public void UpdateGameSettings(GeneralUserSettings customSettings = null)
         {
             var settings = customSettings ?? GetUserSettings();
-            var audioButton = FindObjectOfType<AudioButton>();
+            var audioButton = Object.FindObjectOfType<AudioButton>();
             if (audioButton != null)
             {   
                 audioButton.UpdateVolume(settings.ActionsVolume);
             }
             
-            var audioPrefab = FindObjectOfType<AudioBackground>();
+            var audioPrefab = Object.FindObjectOfType<AudioBackground>();
             if (audioPrefab != null)
             {
                 audioPrefab.UpdateSettings(settings);

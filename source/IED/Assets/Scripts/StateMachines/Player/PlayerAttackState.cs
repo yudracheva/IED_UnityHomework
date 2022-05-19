@@ -51,7 +51,7 @@ namespace StateMachines.Player
             isAttackEnded = false;
         }
 
-        public override bool IsCanBeInterapted()
+        public override bool IsCanBeInterrupted()
         {
             return isAttackEnded;
         }

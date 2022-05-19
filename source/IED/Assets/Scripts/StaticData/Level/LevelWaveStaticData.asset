@@ -50,3 +50,36 @@ MonoBehaviour:
       Value: 3000
       Count: 1
     WaveWaitTime: 20
+  - WaveIndex: 4
+    Enemies:
+    - Id: 0
+      Count: 10
+      HpCoeff: 0.5
+      DamageCoeff: 1
+    Bonuses:
+    - TypeId: 1
+      Value: 3000
+      Count: 1
+    WaveWaitTime: 20
+  - WaveIndex: 5
+    Enemies:
+    - Id: 0
+      Count: 10
+      HpCoeff: 0.5
+      DamageCoeff: 1
+    Bonuses:
+    - TypeId: 1
+      Value: 3000
+      Count: 1
+    WaveWaitTime: 20
+  - WaveIndex: 6
+    Enemies:
+    - Id: 0
+      Count: 10
+      HpCoeff: 0.5
+      DamageCoeff: 1
+    Bonuses:
+    - TypeId: 1
+      Value: 3000
+      Count: 1
+    WaveWaitTime: 20

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Enemies.Entity;
 using Enemies.Spawn;
 using Services.Assets;
@@ -26,7 +27,13 @@ namespace Services.Factories.Enemy
         public void Cleanup()
         {
             for (var i = 0; i < enemiesPool.Count; i++)
-                enemiesPool[i].Enemy.GetComponent<EnemyDeath>().Happened -= OnMonsterSlained;
+            {
+                try
+                {
+                    enemiesPool[i].Enemy.GetComponent<EnemyDeath>().Happened -= OnMonsterSlained; // enemy can be destroyed
+                }
+                catch { }
+            }
 
             enemiesPool.Clear();
         }
@@ -39,7 +46,10 @@ namespace Services.Factories.Enemy
             return CreateMonster(typeId, parent, damageCoeff, hpCoeff);
         }
 
-        private GameObject RecreateMonster(EnemyTypeId typeId, Transform parent, float damageCoeff = 1f,
+        private GameObject RecreateMonster(
+            EnemyTypeId typeId, 
+            Transform parent,
+            float damageCoeff = 1f,
             float hpCoeff = 1f)
         {
             var enemyData = staticData.ForMonster(typeId);
@@ -59,7 +69,10 @@ namespace Services.Factories.Enemy
             return monster;
         }
 
-        private GameObject CreateMonster(EnemyTypeId typeId, Transform parent, float damageCoeff = 1f,
+        private GameObject CreateMonster(
+            EnemyTypeId typeId, 
+            Transform parent, 
+            float damageCoeff = 1f,
             float hpCoeff = 1f)
         {
             var enemyData = staticData.ForMonster(typeId);

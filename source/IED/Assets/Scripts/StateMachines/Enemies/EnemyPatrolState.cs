@@ -9,7 +9,7 @@ namespace StateMachines.Enemies
         {
         }
 
-        public override bool IsCanBeInterapted()
+        public override bool IsCanBeInterrupted()
         {
             return true;
         }

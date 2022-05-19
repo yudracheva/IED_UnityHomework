@@ -1,5 +1,6 @@
 ﻿using Enemies.Spawn;
 using StaticData.Level;
+using UnityEngine;
 
 namespace Services.Bonuses
 {
@@ -7,5 +8,6 @@ namespace Services.Bonuses
     {
         void AddPoint(SpawnPoint spawnPoint);
         void SpawnBonus(WaveBonus bonus);
+        GameObject GetRandomPoint();
     }
 }

@@ -21,7 +21,7 @@ namespace Hero
             Cleanup();
 
         private void Update() =>
-            stateMachine.State.LogicUpdate();
+            stateMachine?.State?.LogicUpdate();
 
         protected virtual void Subscribe()
         {

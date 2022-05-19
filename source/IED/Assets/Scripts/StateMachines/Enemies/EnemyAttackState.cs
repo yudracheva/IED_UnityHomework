@@ -36,7 +36,7 @@ namespace StateMachines.Enemies
             damageCoeff = coeff;
         }
 
-        public override bool IsCanBeInterapted()
+        public override bool IsCanBeInterrupted()
         {
             return true;
         }

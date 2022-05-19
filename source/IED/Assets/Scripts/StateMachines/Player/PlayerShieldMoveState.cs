@@ -52,7 +52,7 @@ namespace StateMachines.Player
             SetFloat(floatValueHash, 0);
         }
 
-        public override bool IsCanBeInterapted()
+        public override bool IsCanBeInterrupted()
         {
             return true;
         }

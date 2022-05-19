@@ -17,11 +17,11 @@ namespace Enemies.Entity
         [SerializeField] private EnemyAttack attack;
         [SerializeField] private EnemyDeath death;
 
-        private EnemiesMoveStaticData moveData;
-        private EnemyAttackStaticData attackData;
-        private float damageCoeff;
+        private EnemiesMoveStaticData _moveData;
+        private EnemyAttackStaticData _attackData;
+        private float _damageCoeff;
 
-        private IHealth health;
+        private IHealth _health;
 
         public EnemyAttackState AttackState { get; private set; }
         public EnemyDeathState DeathState { get; private set; }
@@ -31,15 +31,18 @@ namespace Enemies.Entity
         public EnemySearchState SearchState { get; private set; }
         public EnemyWalkState WalkState { get; private set; }
 
-        public void Construct(EnemiesMoveStaticData moveData, EnemyAttackStaticData attackData, float damageCoeff,
+        public void Construct(
+            EnemiesMoveStaticData moveData,
+            EnemyAttackStaticData attackData,
+            float damageCoeff,
             IHealth health)
         {
-            this.moveData = moveData;
-            this.attackData = attackData;
-            this.damageCoeff = damageCoeff;
-            this.health = health;
-            this.health.Dead += Dead;
-            attack.Construct(this.attackData);
+            _moveData = moveData;
+            _attackData = attackData;
+            _damageCoeff = damageCoeff;
+            _health = health;
+            _health.Dead += Dead;
+            attack.Construct(_attackData);
             Initialize();
         }
 
@@ -54,21 +57,21 @@ namespace Enemies.Entity
         {
             base.Cleanup();
             battleAnimator.Triggered -= AnimationTriggered;
-            health.Dead -= Dead;
+            _health.Dead -= Dead;
             death.Revived -= Revive;
             AttackState.Cleanup();
         }
 
         protected override void CreateStates()
         {
-            AttackState = new EnemyAttackState(stateMachine, "IsSimpleAttack", battleAnimator, this, attack, attackData,
-                damageCoeff);
+            AttackState = new EnemyAttackState(stateMachine, "IsSimpleAttack", battleAnimator, this, attack, _attackData,
+                _damageCoeff);
             DeathState = new EnemyDeathState(stateMachine, "IsDead", battleAnimator, death);
             ImpactState = new EnemyHurtState(stateMachine, "IsImpact", battleAnimator, this);
-            IdleState = new EnemyIdleState(stateMachine, "IsIdle", battleAnimator, move, moveData, this, rotate);
-            RunState = new EnemyRunState(stateMachine, "IsRun", battleAnimator, move, moveData, this);
+            IdleState = new EnemyIdleState(stateMachine, "IsIdle", battleAnimator, move, _moveData, this, rotate);
+            RunState = new EnemyRunState(stateMachine, "IsRun", battleAnimator, move, _moveData, this);
             SearchState = new EnemySearchState(stateMachine, "IsIdle", battleAnimator, entitySearcher, move, this);
-            WalkState = new EnemyWalkState(stateMachine, "IsWalk", battleAnimator, move, moveData, this);
+            WalkState = new EnemyWalkState(stateMachine, "IsWalk", battleAnimator, move, _moveData, this);
         }
 
         protected override void SetDefaultState() =>
@@ -76,14 +79,14 @@ namespace Enemies.Entity
 
         public void Impact()
         {
-            if (stateMachine.State.IsCanBeInterapted())
+            if (stateMachine.State.IsCanBeInterrupted())
                 stateMachine.ChangeState(ImpactState);
         }
 
         public void UpdateDamageCoeff(float coeff)
         {
-            damageCoeff = coeff;
-            AttackState.UpdateDamageCoeff(damageCoeff);
+            _damageCoeff = coeff;
+            AttackState.UpdateDamageCoeff(_damageCoeff);
         }
 
         private void Dead() =>

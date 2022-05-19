@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Loots;
 using StaticData.Loot.Items;
 
@@ -54,6 +55,11 @@ namespace Services.PlayerData
             NotifyAboutChange();
         }
 
+        public bool HasKey()
+        {
+            return slots.Any(d => d.Item != null && d.Item.Type == LootType.Key);
+        }
+        
         private InventorySlot SameSlot(ItemStaticData item)
         {
             for (var i = 0; i < slots.Length; i++)

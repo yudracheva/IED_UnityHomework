@@ -16,5 +16,8 @@
         
         public const string IsDead = "IsDead";
 
+        public const string IsOpening = "IsOpening";
+        
+        public const string IsTryingToOpen = "IsTryingToOpen";
     }
 }

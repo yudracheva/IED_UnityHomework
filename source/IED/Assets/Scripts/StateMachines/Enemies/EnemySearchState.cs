@@ -38,7 +38,7 @@ namespace StateMachines.Enemies
                 UpdateTime();
         }
 
-        public override bool IsCanBeInterapted()
+        public override bool IsCanBeInterrupted()
         {
             return true;
         }

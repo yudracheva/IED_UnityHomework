@@ -7,7 +7,8 @@
         public const string WindowsDataPath = "StaticData/Windows/WindowsStaticData";
         public const string HeroSpawnDataPath = "StaticData/Hero/SpawnData";
         public const string HeroCharacteristicsDataPath = "StaticData/Hero/HeroBaseStaticData";
-
+        public const string ItemsDataPath = "StaticData/Items/KeyMandatoryInventoryItemStaticData";
+        
         public const string EnemiesDataPath = "StaticData/Enemies";
         public const string LevelsDataPath = "StaticData/Levels";
         public const string LootsDataPath = "StaticData/Loots";
