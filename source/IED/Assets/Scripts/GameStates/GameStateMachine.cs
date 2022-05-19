@@ -5,6 +5,7 @@ using GameStates.States.Interfaces;
 using Loots;
 using SceneLoading;
 using Services;
+using Services.Assets;
 using Services.Factories.GameFactories;
 using Services.Factories.Loot;
 using Services.Loot;
@@ -46,9 +47,14 @@ namespace GameStates
                     services.Single<ILootService>(),
                     services.Single<ILootSpawner>(),
                     services.Single<IShopService>(),
-                    services.Single<IUserSettingService>()),
-                [typeof(MainMenuState)] = new MainMenuState(services.Single<IUIFactory>(),
-                    services.Single<IWindowsService>(), sceneLoader, services.Single<IUserSettingService>()),
+                    services.Single<IUserSettingService>(),
+                    services.Single<IAssetProvider>()),
+                [typeof(MainMenuState)] = new MainMenuState(
+                    services.Single<IUIFactory>(),
+                    services.Single<IWindowsService>(), 
+                    sceneLoader, 
+                    services.Single<IUserSettingService>(),
+                    services.Single<IStaticDataService>()),
                 [typeof(LoadGameLevel2State)] = new LoadGameLevel2State(
                     services.Single<IPersistentProgressService>(),
                     sceneLoader,
@@ -60,7 +66,8 @@ namespace GameStates
                     services.Single<ILootService>(),
                     services.Single<ILootSpawner>(),
                     services.Single<IShopService>(),
-                    services.Single<IUserSettingService>()),
+                    services.Single<IUserSettingService>(),
+                    services.Single<IAssetProvider>()),
             };
         }
 

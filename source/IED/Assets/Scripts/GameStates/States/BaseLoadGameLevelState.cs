@@ -9,6 +9,7 @@ using Enemies.Spawn;
 using Environment.DoorObject;
 using GameStates.States.Interfaces;
 using SceneLoading;
+using Services.Assets;
 using Services.Factories.GameFactories;
 using Services.Factories.Loot;
 using Services.Loot;
@@ -19,8 +20,11 @@ using Services.UI.Factory;
 using Services.UserSetting;
 using Services.Waves;
 using StaticData.Level;
+using UI.Audio;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace GameStates.States
@@ -38,7 +42,10 @@ namespace GameStates.States
         private readonly IShopService _shopService;
         private readonly IUserSettingService _userSettingService;
         private readonly IPersistentProgressService _persistentProgressService;
-
+        private readonly IAssetProvider _assets;
+        
+        private Button[] _buttons;
+        
         protected BaseLoadGameLevelState(
             IPersistentProgressService persistentProgressService, 
             ISceneLoader sceneLoader,
@@ -50,7 +57,8 @@ namespace GameStates.States
             ILootService lootService,
             ILootSpawner lootSpawner,
             IShopService shopService,
-            IUserSettingService userSettingService)
+            IUserSettingService userSettingService,
+            IAssetProvider assets)
         {
             _persistentProgressService = persistentProgressService ?? throw new ArgumentNullException(nameof(persistentProgressService));
             _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
@@ -63,6 +71,7 @@ namespace GameStates.States
             _lootSpawner = lootSpawner ?? throw new ArgumentNullException(nameof(lootSpawner));
             _shopService = shopService ?? throw new ArgumentNullException(nameof(shopService));
             _userSettingService = userSettingService ?? throw new ArgumentNullException(nameof(userSettingService));
+            _assets = assets ?? throw new ArgumentNullException(nameof(assets));
         }
 
         public void Enter(string payload)
@@ -82,8 +91,8 @@ namespace GameStates.States
 
         private protected void InitGameWorld(bool needToReset = true)
         {
-            InitUIRoot();
-            InitAudio();
+            var uiRoot = InitUIRoot();
+            InitAudio(uiRoot);
             
             var levelData = GetLevelData();
             InitEnemySpawners(levelData.EnemySpawners, levelData.SpawnPointPrefab);
@@ -102,23 +111,31 @@ namespace GameStates.States
             
             _shopService.InitSlots();
 
-            InitDoor();
+            if (levelData.NeedDoor)
+                InitDoor();
         }
         
         private void InitDoor()
         {
-            var doorStateMachine = Object.FindObjectOfType<DoorStateMachine>();
-            if (doorStateMachine != null)
-                doorStateMachine.Construct(_persistentProgressService);
+            var doorStaticData = _staticData.GetDoor();
+            var door = _assets.Instantiate(doorStaticData.DoorPrefab, doorStaticData.SpawnPoint, doorStaticData.SpawnRotation);
+            door.GetComponent<DoorStateMachine>().Construct(_persistentProgressService);
 
-            var nextLevelDoor = Object.FindObjectOfType<NextLevel>();
-            if (nextLevelDoor != null)
-                nextLevelDoor.Construct(_gameStateMachine);
+            var nextLevelDoor = door.GetComponentInChildren<NextLevel>();
+            nextLevelDoor.Construct(_gameStateMachine);
         }
 
-        private void InitAudio()
+        private void InitAudio(GameObject uiRoot)
         {
             _userSettingService.UpdateGameSettings();
+            
+            var buttonSong = uiRoot.GetComponentInChildren<AudioButton>();
+            buttonSong.Construct(_userSettingService);
+
+            var audio = _staticData.AudioForLevel(SceneManager.GetActiveScene().name);
+            
+            var audioBackground = uiRoot.GetComponentInChildren<AudioBackground>();
+            audioBackground.Construct(_userSettingService, audio.AudioClip);
         }
 
         private LevelStaticData GetLevelData()
@@ -142,7 +159,7 @@ namespace GameStates.States
         private GameObject CreateHud(GameObject hero) =>
             _gameFactory.CreateHud(hero);
 
-        private void InitUIRoot() =>
+        private GameObject InitUIRoot() =>
             _uiFactory.CreateUIRoot();
 
         private void InitLootService(string sceneName) =>

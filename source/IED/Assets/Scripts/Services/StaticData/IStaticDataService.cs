@@ -2,6 +2,7 @@
 using Enemies.Spawn;
 using Loots;
 using Services.UI.Factory;
+using StaticData.Audio;
 using StaticData.Bonuses;
 using StaticData.Enemies;
 using StaticData.Hero;
@@ -26,5 +27,7 @@ namespace Services.StaticData
         BonusStaticData ForBonus(BonusTypeId typeId);
         ScoreStaticData ForScore();
         MandatoryInventoryItemStaticData ForMandatoryItem(LootType key);
+        DoorStaticData GetDoor();
+        LevelAudio AudioForLevel(string sceneKey);
     }
 }

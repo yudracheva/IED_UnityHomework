@@ -56,12 +56,12 @@ namespace Hero
 
         private float Angle(Vector3 mouseClick)
         {
-            var differenceDirection =
-                new Vector2(mouseClick.x - transform.position.x, mouseClick.z - transform.position.z).normalized;
+            var differenceDirection = new Vector2(mouseClick.x - transform.position.x, mouseClick.z - transform.position.z).normalized;
             var forward = new Vector2(transform.forward.x, transform.forward.z);
             return Vector2.SignedAngle(differenceDirection, forward);
         }
 
+        
         public void Disable()
         {
             _isDisabled = true;

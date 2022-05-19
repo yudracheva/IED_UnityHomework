@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Audio;
 using ConstantsValue;
 using GameStates;
 using Services.Assets;
@@ -20,6 +21,7 @@ using UI.Windows.Menus;
 using UI.Windows.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Services.UI.Factory
@@ -38,7 +40,7 @@ namespace Services.UI.Factory
         private Camera _mainCamera;
         private Transform _uiRoot;
         private Button[] _buttons;
-            
+        
         public UIFactory(
             IGameStateMachine gameStateMachine,
             IAssetProvider assets,
@@ -61,10 +63,13 @@ namespace Services.UI.Factory
 
         public event Action<WindowId, BaseWindow> Spawned;
 
-        public void CreateUIRoot()
+        public GameObject CreateUIRoot()
         {
-            _uiRoot = _assets.Instantiate<GameObject>(AssetsPath.UIRootPath).transform;
+            var uiRoot = _assets.Instantiate<GameObject>(AssetsPath.UIRootPath); 
+            _uiRoot = uiRoot.transform;
             _uiRoot.GetComponent<UIRoot>().SetCamera(GetCamera());
+
+            return uiRoot;
         }
 
         public void CreateWindow(WindowId id)
@@ -97,17 +102,15 @@ namespace Services.UI.Factory
                     CreateWindow(config, id);
                     break;
             }
-
+            
             _buttons = _uiRoot.GetComponentsInChildren<Button>();
-            var buttonSong = _uiRoot.GetComponent<AudioButton>();
-            var audioSource = buttonSong.GetComponentInChildren<AudioSource>();
-            audioSource.volume = _userSettingService.GetUserSettings().ActionsVolume;
+            var buttonSong = _uiRoot.GetComponentInChildren<AudioButton>();
             
             foreach (var button in _buttons)
             {
                 var eventTriggerComponent = button.gameObject.AddComponent<EventTrigger>();
                 var eventTrigger = new EventTrigger.Entry();
-                eventTrigger.callback.AddListener((eventData) => {  buttonSong.OnClick(); });
+                eventTrigger.callback.AddListener( _ => {  buttonSong.OnClick(); });
                 eventTriggerComponent.triggers.Add(eventTrigger);
             }
         }

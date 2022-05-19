@@ -1,11 +1,10 @@
+using Environment;
 using UnityEngine;
 
 namespace Hero
 {
     public class HeroFallingMechanism : MonoBehaviour
     {
-        private const string GroundTag = "Ground";
-        
         private GameObject _hero;
         private bool _isFalling; 
             
@@ -16,13 +15,13 @@ namespace Hero
 
         protected void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(GroundTag))
+            if (other.GetComponent<Ground>() != null)
                 _isFalling = false;
         }
 
         protected void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag(GroundTag))
+            if (other.GetComponent<Ground>() != null)
                 _isFalling = true;
         }
 

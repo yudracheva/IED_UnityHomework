@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3834bc35af024d141b3a66ce159bd5a3, type: 3}
+  m_Name: AudioStaticData
+  m_EditorClassIdentifier: 
+  Audios:
+  - LevelName: MainMenu
+    AudioClip: {fileID: 8300000, guid: 77bcd876325bfa941b7cc7d523aa57c7, type: 3}
+  - LevelName: Game
+    AudioClip: {fileID: 8300000, guid: 89a4eda521fb8174e9861dca8bbb1f13, type: 3}
+  - LevelName: Game2
+    AudioClip: {fileID: 8300000, guid: 89a4eda521fb8174e9861dca8bbb1f13, type: 3}

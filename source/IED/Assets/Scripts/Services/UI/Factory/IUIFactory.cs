@@ -1,5 +1,6 @@
 ﻿using System;
 using UI.Base;
+using UnityEngine;
 
 namespace Services.UI.Factory
 {
@@ -7,6 +8,6 @@ namespace Services.UI.Factory
     {
         event Action<WindowId, BaseWindow> Spawned;
         void CreateWindow(WindowId id);
-        void CreateUIRoot();
+        GameObject CreateUIRoot();
     }
 }

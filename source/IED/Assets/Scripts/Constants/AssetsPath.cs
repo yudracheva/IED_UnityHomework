@@ -8,6 +8,8 @@
         public const string HeroSpawnDataPath = "StaticData/Hero/SpawnData";
         public const string HeroCharacteristicsDataPath = "StaticData/Hero/HeroBaseStaticData";
         public const string ItemsDataPath = "StaticData/Items/KeyMandatoryInventoryItemStaticData";
+        public const string DoorDataPath = "StaticData/Door/DoorStaticData";
+        public const string AudioDataPath = "StaticData/Audio/AudioStaticData";
         
         public const string EnemiesDataPath = "StaticData/Enemies";
         public const string LevelsDataPath = "StaticData/Levels";

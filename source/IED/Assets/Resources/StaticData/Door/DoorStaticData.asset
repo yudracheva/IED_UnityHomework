@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c745962e266830d41a6c6f15b08f9f7c, type: 3}
+  m_Name: DoorStaticData
+  m_EditorClassIdentifier: 
+  DoorPrefab: {fileID: 5630983041952114487, guid: 3c74a06420336fd4b86462f316a4b456,
+    type: 3}
+  SpawnPoint: {x: -2.14, y: 0.058, z: 81.184}
+  SpawnRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}

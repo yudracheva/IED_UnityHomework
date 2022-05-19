@@ -1181,6 +1181,8 @@ GameObject:
   - component: {fileID: 1120518465472067738}
   - component: {fileID: 2217480998554278377}
   - component: {fileID: 2427710887201911752}
+  - component: {fileID: 5718011773922912909}
+  - component: {fileID: 5217824504876251317}
   m_Layer: 6
   m_Name: NewHero
   m_TagString: Player
@@ -1424,6 +1426,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06e62168d7ec43caadba2c078d1be9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5718011773922912909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f85eff80cd3ff49992427244307665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5217824504876251317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa20fbb3e85f39e41803bbf81f4da548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &133228

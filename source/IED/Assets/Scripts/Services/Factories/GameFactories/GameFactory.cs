@@ -89,6 +89,7 @@ namespace Services.Factories.GameFactories
         {
             var hud = _assets.Instantiate<GameObject>(AssetsPath.Hud);
             hud.GetComponentInChildren<HPDisplayer>().Construct(hero.GetComponentInChildren<IHealth>());
+            hud.GetComponentInChildren<ButtonDisplayer>().Construct(hero.GetComponentInChildren<HeroDoorInteraction>());
             hud.GetComponentInChildren<StaminaDisplayer>().Construct(hero.GetComponentInChildren<IStamina>());
             hud.GetComponentInChildren<HeroMoneyDisplayer>().Construct(_progressService.Player.Monies);
             hud.GetComponentInChildren<HeroScoreDisplayer>().Construct(_progressService.Player.Score);

@@ -167,8 +167,10 @@ namespace Hero
                 stateMachine.ChangeState(ImpactState);
         }
 
-        public void SetRotate(float rotateAngle) =>
+        public void SetRotate(float rotateAngle)
+        {
             RotateAngle = rotateAngle;
+        }
 
         public void Dead() =>
             stateMachine.ChangeState(DeathState);

@@ -5,6 +5,7 @@ using ConstantsValue;
 using Enemies.Spawn;
 using Loots;
 using Services.UI.Factory;
+using StaticData.Audio;
 using StaticData.Bonuses;
 using StaticData.Enemies;
 using StaticData.Hero;
@@ -27,6 +28,8 @@ namespace Services.StaticData
         private Dictionary<string, EnemyLoot[]> _loots;
         private ScoreStaticData _scoreData;
         private ShopStaticData _shopData;
+        private DoorStaticData _door;
+        private AudioStaticData _audio;
         private MandatoryInventoryItemStaticData _mandatoryInventoryItemStaticData;
         private Dictionary<WindowId, WindowInstantiateData> _windows;
 
@@ -37,7 +40,9 @@ namespace Services.StaticData
             _shopData = Resources.Load<ShopStaticData>(AssetsPath.ShopDataPath);
             _scoreData = Resources.Load<ScoreStaticData>(AssetsPath.ScoreDataPath);
             _mandatoryInventoryItemStaticData = Resources.Load<MandatoryInventoryItemStaticData>(AssetsPath.ItemsDataPath);
-
+            _door = Resources.Load<DoorStaticData>(AssetsPath.DoorDataPath);
+            _audio = Resources.Load<AudioStaticData>(AssetsPath.AudioDataPath);
+                
             _enemies = Resources
                 .LoadAll<EnemyStaticData>(AssetsPath.EnemiesDataPath)
                 .ToDictionary(x => x.Id, x => x);
@@ -89,6 +94,16 @@ namespace Services.StaticData
             return _levels.TryGetValue(sceneKey, out var staticData)
                 ? staticData
                 : null;
+        }
+        
+        public LevelAudio AudioForLevel(string sceneKey)
+        {
+            return _audio.Audios.FirstOrDefault(d=>d.LevelName == sceneKey);
+        }
+        
+        public DoorStaticData GetDoor()
+        {
+            return _door;
         }
 
         public EnemyLoot ForLoot(string levelKey, EnemyTypeId typeId)

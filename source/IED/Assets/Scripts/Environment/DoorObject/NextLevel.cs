@@ -2,6 +2,7 @@ using System;
 using ConstantsValue;
 using GameStates;
 using GameStates.States;
+using Hero;
 using UnityEngine;
 
 namespace Environment.DoorObject
@@ -17,7 +18,7 @@ namespace Environment.DoorObject
         
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.GetComponent<HeroPlayer>() != null)
             {
                 _gameStateMachine.Enter<LoadGameLevel2State, string>(Constants.Game2Scene);
             }

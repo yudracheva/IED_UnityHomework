@@ -11,7 +11,7 @@ namespace StaticData.Level
         public List<SpawnPointStaticData> EnemySpawners;
         public List<SpawnPointStaticData> BonusSpawners;
         public LevelWaveStaticData LevelWaves;
-
         public SpawnPoint SpawnPointPrefab;
+        public bool NeedDoor;
     }
 }

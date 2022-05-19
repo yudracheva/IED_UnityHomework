@@ -1,4 +1,5 @@
 ﻿using SceneLoading;
+using Services.Assets;
 using Services.Factories.GameFactories;
 using Services.Factories.Loot;
 using Services.Loot;
@@ -24,7 +25,8 @@ namespace GameStates.States
             ILootService lootService,
             ILootSpawner lootSpawner,
             IShopService shopService,
-            IUserSettingService userSettingService) 
+            IUserSettingService userSettingService,
+            IAssetProvider assetProvider) 
             : base(
             persistentProgressService, 
             sceneLoader,
@@ -36,7 +38,8 @@ namespace GameStates.States
             lootService,
             lootSpawner,
             shopService,
-            userSettingService)
+            userSettingService,
+            assetProvider)
         {
 
         }

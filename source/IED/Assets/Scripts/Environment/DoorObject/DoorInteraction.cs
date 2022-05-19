@@ -1,31 +1,20 @@
 using Environment.DoorObject;
-using TMPro;
-using UI.Displaying;
+using Hero;
 using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
     [SerializeField] private DoorStateMachine stateMachine;
         
-    private readonly string PlayerTag = "Player";
-    private InformationBlock _informationBlock;
-    private TextMeshProUGUI _text;
     private bool _needToCheck;
     
     private void OnTriggerEnter(Collider other)
     {
-        if (_informationBlock == null)
+        if (other.TryGetComponent<HeroDoorInteraction>(out var heroDoorInteraction) && !stateMachine.DoorIsOpen())
         {
-            _informationBlock = FindObjectOfType<InformationBlock>(true); 
-            _text = _informationBlock.GetComponentInChildren<TextMeshProUGUI>();
+            heroDoorInteraction.ShowMessage("Please click E\nYou need a key");
+            _needToCheck = true;   
         }
-
-        if (!other.CompareTag(PlayerTag) || stateMachine.DoorIsOpen()) 
-            return;
-        
-        _informationBlock.gameObject.SetActive(true);
-        _text.text = "Please click E\nYou need a key";
-        _needToCheck = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,10 +22,11 @@ public class DoorInteraction : MonoBehaviour
         if (!_needToCheck)
             return;
         
-        if (other.CompareTag(PlayerTag))
-            _informationBlock.gameObject.SetActive(false);
-
-        _needToCheck = false;
+        if (other.TryGetComponent<HeroDoorInteraction>(out var heroDoorInteraction))
+        {
+            heroDoorInteraction.HideMessage();
+            _needToCheck = false;
+        }
     }
 
     private void Update()

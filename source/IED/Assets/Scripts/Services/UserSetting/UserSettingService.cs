@@ -1,11 +1,8 @@
 using System;
 using System.IO;
-using Audio;
 using Newtonsoft.Json;
-using UI.Audio;
 using UnityEngine;
 using GeneralUserSettings = UserSettings.GeneralUserSettings;
-using Object = UnityEngine.Object;
 
 namespace Services.UserSetting
 {
@@ -26,6 +23,8 @@ namespace Services.UserSetting
             }
         }
 
+        public event Action<GeneralUserSettings> Changed;
+
         public GeneralUserSettings GetUserSettings()
         {
             return (GeneralUserSettings) _currentUserSettings.Clone();
@@ -40,17 +39,7 @@ namespace Services.UserSetting
         public void UpdateGameSettings(GeneralUserSettings customSettings = null)
         {
             var settings = customSettings ?? GetUserSettings();
-            var audioButton = Object.FindObjectOfType<AudioButton>();
-            if (audioButton != null)
-            {   
-                audioButton.UpdateVolume(settings.ActionsVolume);
-            }
-            
-            var audioPrefab = Object.FindObjectOfType<AudioBackground>();
-            if (audioPrefab != null)
-            {
-                audioPrefab.UpdateSettings(settings);
-            }
+            Changed?.Invoke(settings);
         }
         
         private bool TryLoadSettings()

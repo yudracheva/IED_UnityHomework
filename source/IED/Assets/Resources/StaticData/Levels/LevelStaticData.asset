@@ -32,3 +32,4 @@ MonoBehaviour:
   LevelWaves: {fileID: 11400000, guid: 7fc8ef2828526ee4d8623005c32e01be, type: 2}
   SpawnPointPrefab: {fileID: 7616564685531322821, guid: e884ede9b36cb164eb8089ad53210d31,
     type: 3}
+  NeedDoor: 1
